@@ -1,0 +1,17 @@
+server:
+  port: 8181
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/personnel_management?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+mybatis:
+  type-aliases-package: com.meteo.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+

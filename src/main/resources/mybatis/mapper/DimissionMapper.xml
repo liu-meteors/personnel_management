@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.DimissionMapper">
+    <select id="getAllDimission" resultType="com.meteor.pojo.Dimission">
+        select * from dimission
+    </select>
+    <select id="getDimissionById" parameterType="integer" resultType="com.meteor.pojo.Dimission">
+        select * from dimission where id=#{id}
+    </select>
+    <insert id="addDimission" parameterType="com.meteor.pojo.Dimission">
+        insert into dimission (id,username,empnumber,leavedate,department,position,handover,isover,phone) values (#{id},#{username},#{empNumber},#{leaveDate,jdbcType=DATE},#{department},#{position},#{handover},#{isOver},#{phone});
+    </insert>
+    <delete id="deleteDimission" parameterType="integer">
+        delete * from dimission where id=#{id}
+    </delete>
+    <update id="updateDimission" parameterType="com.meteor.pojo.Dimission">
+        update dimission set id=#{id},username=#{username},empnumber=#{empNumber},leavedate=#{leaveDate,jdbcType=DATE},department=#{department},position=#{position},handover=#{handover},isover=#{isOver},phone=#{phone}
+        where id=#{id}
+    </update>
+
+</mapper>

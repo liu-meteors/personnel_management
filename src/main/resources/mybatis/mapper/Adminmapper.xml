@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.AdminMapper">
+    <select id="getAdminByName" resultType="com.meteor.pojo.Admin">
+        select * from admin where username = #{username}
+    </select>
+    <insert id="addAdmin" parameterType="com.meteor.pojo.Admin">
+        insert into admin (id,empid,username,password,depid) values (#{id},#{empId},#{username},#{password}},#{depId})
+    </insert>
+    <delete id="deleteAdminById" parameterType="integer">
+        delete * from admin where id = #{id}
+    </delete>
+    <update id="updateAdmin" parameterType="com.meteor.pojo.Admin">
+        update admin set username=#{username},password=#{password},empid=#{empId},depid=#{depId} where id = #{id}
+    </update>
+</mapper>

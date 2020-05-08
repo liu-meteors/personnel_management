@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.BenefitMapper">
+    <select id="getAllBen" resultType="com.meteor.pojo.Benefit">
+        SELECT * FROM benefit order by id desc;
+    </select>
+    <select id="getAllBenefitByYear" resultType="com.meteor.pojo.Benefit">
+        SELECT * FROM benefit WHERE YEAR(fillInDate)=YEAR(NOW()) order by id desc;
+    </select>
+    <select id="getAllBenefitByDep" resultType="com.meteor.pojo.Benefit">
+            SELECT * FROM benefit where department=#{dep} order by id desc;
+    </select>
+    <select id="getAllBenefitByDepYear" resultType="com.meteor.pojo.Benefit">
+         SELECT * FROM benefit where department=#{dep} and YEAR(fillInDate)=YEAR(NOW()) order by id desc;
+    </select>
+    <insert id="addBen" parameterType="com.meteor.pojo.Benefit">
+        insert into benefit (id,benYear,money,quarter,fillInDate,isFillIn,department) values
+        (#{id},#{benYear},#{money},#{quarter},#{fillInDate},#{isFillIn},#{department})
+    </insert>
+    <update id="updateBen" parameterType="com.meteor.pojo.Benefit">
+        update benefit set id=#{id},benYear=#{benYear},money=#{money},quarter=#{quarter},fillInDate=#{fillInDate},isFillIn=#{isFillIn},department=#{department}
+         where id=#{id}
+    </update>
+    <delete id="deleteBenById" parameterType="integer">
+        delete * from benefit where id=#{id}
+    </delete>
+</mapper>

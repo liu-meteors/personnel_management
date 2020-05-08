@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.AwardMapper">
+    <select id="getAllAward" resultType="com.meteor.pojo.Award">
+        select * from award
+    </select>
+    <select id="getAwardByEmpId" resultType="com.meteor.pojo.Award" parameterType="integer">
+        select * from award where empid = #{empId}
+    </select>
+    <select id="getAwardById" parameterType="integer" resultType="com.meteor.pojo.Award">
+        select * from award where id = #{id}
+    </select>
+    <select id="getAwardByType" resultType="com.meteor.pojo.Award" parameterType="integer">
+        select * from award where type = #{type}
+    </select>
+    <select id="getAllAwardByEmpNow" resultType="com.meteor.pojo.Award">
+        SELECT * FROM award WHERE PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(recordDate,'%Y%m')) =1 and where empid=#{empId}
+    </select>
+    <insert id="addAward" parameterType="com.meteor.pojo.Award">
+        insert into award (id,empid,money,awardType,awardDescribe,recordDate) values (#{id},#{empId},#{money},#{awardType},#{awardDescribe},#{recordDate,jdbcType=DATE})
+    </insert>
+    <delete id="deleteAwardByEmpId" parameterType="integer">
+        delete * from award where empid=#{id}
+    </delete>
+    <delete id="deleteAwardById" parameterType="integer">
+         delete  from award where id=#{id}
+    </delete>
+    <update id="updateAward" parameterType="com.meteor.pojo.Award">
+        update award set id=#{id},empid=#{empId},money=#{money},awardType=#{awardType},awardDescribe=#{awardDescribe},recordDate=#{recordDate,jdbcType=DATE}
+        where id=#{id}
+    </update>
+</mapper>

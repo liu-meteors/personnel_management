@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.DepartmentMapper">
+    <select id="getAll" resultType="com.meteor.pojo.Department">
+        select * from department
+    </select>
+    <select id="getDepById" resultType="com.meteor.pojo.Department">
+        select * from department where id = #{id}
+    </select>
+    <insert id="addDep" parameterType="com.meteor.pojo.Department">
+        insert into department (id,name) values (#{id},#{name})
+    </insert>
+    <update id="updataDep" parameterType="com.meteor.pojo.Department">
+        update department set name=#{name} where id = #{id}
+    </update>
+    <delete id="deleteDepById" parameterType="int">
+        delete from department where id = #{id}
+    </delete>
+
+</mapper>

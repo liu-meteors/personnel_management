@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.ContractMapper">
+    <insert id="addContract" parameterType="com.meteor.pojo.Contract">
+        insert into contract (id,department,posite,fileAddress) values (#{id},#{department},#{posite},#{fileAddress});
+    </insert>
+    <delete id="deleteContractById" parameterType="integer">
+        delete from contract where id=#{id}
+    </delete>
+    <update id="updateContractById" parameterType="com.meteor.pojo.Contract">
+        update contract set fileAddress=#{fileAddress} where id=#{id}
+    </update>
+    <select id="getAllContract" resultType="com.meteor.pojo.Contract">
+        select * from contract
+    </select>
+    <select id="getContractById" resultType="com.meteor.pojo.Contract">
+        select * from contract where id=#{id}
+    </select>
+</mapper>

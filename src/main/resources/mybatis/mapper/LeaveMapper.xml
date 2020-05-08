@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.LeaveMapper">
+    <select id="getAllLeave" resultType="com.meteor.pojo.Leave">
+          SELECT * FROM `leave` order by id desc
+    </select>
+    <select id="getAllDepApprove" resultType="com.meteor.pojo.Leave">
+         SELECT * FROM `leave` where depApprove = 1 order by id desc
+    </select>
+    <select id="getAllApprove" resultType="com.meteor.pojo.Leave">
+         SELECT * FROM `leave` where hrApprove = 1 order by id desc
+    </select>
+    <select id="getAllByEmpId" resultType="com.meteor.pojo.Leave">
+         SELECT * FROM `leave` where empid = #{id} order by id desc
+    </select>
+    <insert id="addLeave" parameterType="com.meteor.pojo.Leave">
+        insert into `leave` (id,startdate,overdate,empid,depApprove,hrApprove,applyDate,leaveDesc) values
+        (#{id},#{startDate,jdbcType=DATE},#{overDate,jdbcType=DATE},#{empId},#{depApprove},#{hrApprove},#{applyDate,jdbcType=DATE},#{leaveDesc})
+    </insert>
+    <update id="updateLeave" parameterType="com.meteor.pojo.Leave">
+        update `leave` set startdate=#{startDate,jdbcType=DATE},overdate=#{overDate,jdbcType=DATE},depApprove=#{depApprove},hrApprove=#{hrApprove},applyDate=#{applyDate,jdbcType=DATE},leaveDesc=#{leaveDesc}
+         where id=#{id}
+    </update>
+    <select id="getLeaveById" resultType="com.meteor.pojo.Leave">
+        SELECT * FROM `leave` where id=#{id} order by id desc
+    </select>
+    <select id="getAllLeaveNow"  resultType="com.meteor.pojo.Leave">
+         SELECT * FROM `leave` where date_format(applyDate,'%Y-%m')=date_format(now(),'%Y-%m') and empid=#{id} order by id desc
+    </select>
+    <select id="getAllLeaveByNow" resultType="com.meteor.pojo.Leave">
+         SELECT * FROM `leave` where date_format(applyDate,'%Y-%m')=date_format(now(),'%Y-%m') order by id desc
+    </select>
+</mapper>

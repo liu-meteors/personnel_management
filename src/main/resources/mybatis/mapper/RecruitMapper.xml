@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.RecruitMapper">
+    <select id="getAllRecruit" resultType="com.meteor.pojo.Recruit">
+        select * from recruit
+    </select>
+    <select id="getRecruitById" resultType="com.meteor.pojo.Recruit" parameterType="integer">
+         select * from recruit where id=#{id}
+    </select>
+    <insert id="addRecruit" parameterType="com.meteor.pojo.Recruit">
+        insert into recruit (id,department,position,salary,information) values (#{id},#{department},#{position},#{salary},#{information})
+    </insert>
+    <delete id="deleteRecruitById" parameterType="integer">
+        delete * from recruit where id=#{id}
+    </delete>
+    <update id="updateRecruit" parameterType="com.meteor.pojo.Recruit">
+        update recruit set id=#{id},department=#{department},position=#{position},salary=#{salary},information=#{information} where id=#{id}
+    </update>
+</mapper>

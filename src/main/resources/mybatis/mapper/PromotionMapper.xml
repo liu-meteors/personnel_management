@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.PromotionMapper">
+    <select id="getAllPromotion" resultType="com.meteor.pojo.Promotion">
+        select * from promotion order by id desc
+    </select>
+    <select id="getPromotionById" resultType="com.meteor.pojo.Promotion">
+         select * from promotion where id=#{id} order by id desc
+    </select>
+    <delete id="deletePromotion" parameterType="integer">
+        delete  from promotion where id=#{id}
+    </delete>
+    <insert id="addPromotion" parameterType="com.meteor.pojo.Promotion">
+        insert into promotion (id,empid,oldposition,newposition,changeDate,transferred) values
+        (#{id},#{empId},#{oldPosition},#{newPosition},#{changeDate,jdbcType=DATE},#{transferred})
+    </insert>
+    <select id="getPromotionByEmpId" resultType="com.meteor.pojo.Promotion" parameterType="integer">
+        select * from promotion where empid=#{empId} order by id desc
+    </select>
+</mapper>

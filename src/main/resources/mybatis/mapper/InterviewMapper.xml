@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.InterviewMapper">
+    <insert id="addInterview" parameterType="com.meteor.pojo.Interview">
+        insert into interview (id,name,phone,address,viewDate,mail,isView,isSend,fileAddress,department,posite,fileUrl) values
+        (#{id},#{name},#{phone},#{address},#{viewDate,jdbcType=DATE},#{mail},#{isView},#{isSend},#{fileAddress},#{department},#{posite},#{fileUrl})
+    </insert>
+    <update id="updateInterviewById" parameterType="com.meteor.pojo.Interview">
+        update interview set name=#{name},phone=#{phone},address=#{address},viewDate=#{viewDate,jdbcType=DATE},
+        mail=#{mail},isView=#{isView},isSend=#{isSend},fileAddress=#{fileAddress},department=#{department},posite=#{posite},fileUrl=#{fileUrl}
+        where id=#{id}
+    </update>
+    <delete id="deleteInterviewById" parameterType="integer">
+        delete * from interview where id=#{id}
+    </delete>
+
+    <select id="getAllInterview" resultType="com.meteor.pojo.Interview">
+        select * from interview
+    </select>
+    <select id="getAllInterviewNow" resultType="com.meteor.pojo.Interview">
+        select * from interview where to_days(viewDate) = to_days(now());
+    </select>
+    <select id="getInterviewById" resultType="com.meteor.pojo.Interview">
+        select * from interview where id=#{id}
+    </select>
+</mapper>

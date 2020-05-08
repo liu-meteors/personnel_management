@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.SalaryMapper">
+
+    <insert id="addSalary" parameterType="com.meteor.pojo.Salary">
+        insert into salary (id,empId,paydate,money,bonus,forfeit,gradeMoney,allMoney) values
+        (#{id},#{empId},#{payDate,jdbcType=DATE},#{money},#{bonus},#{forfeit},#{gradeMoney},#{allMoney})
+    </insert>
+    <delete id="deleteSalaryById" parameterType="integer">
+        delete * from salary where id=#{id}
+    </delete>
+    <update id="updateSalary" parameterType="com.meteor.pojo.Salary">
+        update salary set paydate=#{payDate,jdbcType=DATE},money=#{money},bonus=#{bonus},
+        forfeit=#{forfeit},gradeMoney=#{gradeMoney},allMoney=#{allMoney} where id=#{id}
+    </update>
+    <select id="getAllSalary" resultType="com.meteor.pojo.Salary">
+        select * from salary
+    </select>
+    <select id="getAllSalaryByEmp" resultType="com.meteor.pojo.Salary">
+        select * from salary where empId=#{id}
+    </select>
+    <select id="getSalaryByEmp"  resultType="com.meteor.pojo.Salary">
+         select * from salary where id=#{id}
+    </select>
+    <select id="getSalaryByEmpNow" resultType="com.meteor.pojo.Salary">
+        SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m') and  empId=#{id}
+    </select>
+    <select id="getAllSalaryNow" resultType="com.meteor.pojo.Salary">
+        SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m')
+    </select>
+    <!--    SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m') and where empId=#{id}-->
+</mapper>

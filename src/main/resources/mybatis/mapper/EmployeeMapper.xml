@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meteor.mapper.EmployeeMapper">
+
+    <select id="getAll" resultType="com.meteor.pojo.Employee">
+        select * from employee
+    </select>
+    <select id="getEmployeeByNumber" resultType="com.meteor.pojo.Employee">
+        select * from employee where empnumber = #{number}
+    </select>
+    <select id="getCount" resultType="integer">
+        select count(*) from employee where department = #{depId}
+    </select>
+    <insert id="addEmployee" parameterType="com.meteor.pojo.Employee">
+        insert into employee (id,username,phone,address,empnumber,password,department,posite,signdate,overdate,salary)
+        values (#{id},#{username},#{phone},#{address},#{empNumber},#{password},#{department},#{posite},#{signDate,jdbcType=DATE},#{overDate,jdbcType=DATE},#{salary})
+    </insert>
+    <delete id="deleteEmployeeById" parameterType="integer">
+        delete from employee where id = #{id}
+    </delete>
+    <update id="updateEmployee" parameterType="com.meteor.pojo.Employee">
+        update employee set username=#{username},phone=#{phone},address=#{address},empnumber=#{empNumber},
+        password=#{password},department=#{department},posite=#{posite},signdate=#{signDate,jdbcType=DATE},overdate=#{overDate,jdbcType=DATE},salary=#{salary}
+         where id=#{id}
+    </update>
+    <select id="getEmployeeById" parameterType="integer" resultType="com.meteor.pojo.Employee">
+        select * from employee where id = #{id}
+    </select>
+    <select id="getLastEmpNumber" resultType="string">
+        select empnumber from employee order by id DESC limit 1
+    </select>
+    <select id="getAllEmpByDepPos" resultType="com.meteor.pojo.Employee">
+        select * from employee where department=#{dep} And posite=#{pos}
+    </select>
+    <select id="getEmpByPos" resultType="com.meteor.pojo.Employee">
+         select * from employee where posite=#{pos}
+    </select>
+</mapper>
