@@ -14,6 +14,6 @@ public interface PromotionMapper {
     int addPromotion(Promotion promotion);
     int deletePromotion(Integer id);
     List<Promotion> getPromotionByEmpId(Integer empId);
-
+    List<Promotion> getPromotionByEmpIdYear(Integer empId);
 
 }

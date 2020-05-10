@@ -36,4 +36,9 @@ public class PromotionController {
         int isSuccess=promotionService.deletePromotion(id);
         return ReturnUtils.isSuccess(isSuccess);
     }
+
+    @GetMapping("/getPromotionByEmpIdYear/{id}")
+    public List<Promotion> getPromotionByEmpIdYear(@PathVariable("id") Integer empId){
+        return promotionService.getPromotionByEmpIdYear(empId);
+    }
 }

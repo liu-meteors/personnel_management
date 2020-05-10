@@ -19,4 +19,7 @@
     <select id="getPromotionByEmpId" resultType="com.meteor.pojo.Promotion" parameterType="integer">
         select * from promotion where empid=#{empId} order by id desc
     </select>
+    <select id="getPromotionByEmpIdYear" resultType="com.meteor.pojo.Promotion">
+         select * from promotion where YEAR(changeDate)=YEAR(NOW()) and empid=#{empId}
+    </select>
 </mapper>

@@ -84,6 +84,40 @@ public class PromotionServiceImpl implements PromotionService {
         return promotionMapper.deletePromotion(id);
     }
 
+    /**
+     * @param empId
+     * @Description: 获取今年的晋升信息
+     * @Param: * @Param: empId
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Promotion> getPromotionByEmpIdYear(Integer empId) {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        List<Position> positions=positionMapper.getAllPosition();
+        List<Promotion> promotions= promotionMapper.getPromotionByEmpIdYear(empId);
+        List<Employee> employees=employeeMapper.getAll();
+        for (int i=0;i<promotions.size();i++){
+            for (int j=0;j<positions.size();j++){
+                if (promotions.get(i).getOldPosition()==positions.get(j).getId()){
+                    promotions.get(i).setOldPositionName(positions.get(j).getName());
+                }
+                if (promotions.get(i).getNewPosition()==positions.get(j).getId()){
+                    promotions.get(i).setNewPositionName(positions.get(j).getName());
+                }
+            }
+            for (int k=0;k<employees.size();k++){
+                if (employees.get(k).getId()==promotions.get(i).getEmpId()){
+                    promotions.get(i).setEnpName(employees.get(k).getUsername());
+                    promotions.get(i).setEmpNumber(employees.get(k).getEmpNumber());
+                }
+            }
+            promotions.get(i).setChangeDateStr(simpleDateFormat.format(promotions.get(i).getChangeDate()));
+        }
+        return promotions;
+    }
+
     @Override
     public List<Promotion> getPromotionByEmpId(Integer empId) {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
