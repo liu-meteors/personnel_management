@@ -15,12 +15,15 @@
     <select id="getAllBenefitByDepYear" resultType="com.meteor.pojo.Benefit">
          SELECT * FROM benefit where department=#{dep} and YEAR(fillInDate)=YEAR(NOW()) order by id desc;
     </select>
+    <select id="getBenefitById" resultType="com.meteor.pojo.Benefit">
+            SELECT * FROM benefit where id=#{id}
+    </select>
     <insert id="addBen" parameterType="com.meteor.pojo.Benefit">
         insert into benefit (id,benYear,money,quarter,fillInDate,isFillIn,department) values
         (#{id},#{benYear},#{money},#{quarter},#{fillInDate},#{isFillIn},#{department})
     </insert>
     <update id="updateBen" parameterType="com.meteor.pojo.Benefit">
-        update benefit set id=#{id},benYear=#{benYear},money=#{money},quarter=#{quarter},fillInDate=#{fillInDate},isFillIn=#{isFillIn},department=#{department}
+        update benefit set benYear=#{benYear},money=#{money},quarter=#{quarter},fillInDate=#{fillInDate},isFillIn=#{isFillIn},department=#{department}
          where id=#{id}
     </update>
     <delete id="deleteBenById" parameterType="integer">

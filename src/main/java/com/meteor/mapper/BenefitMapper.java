@@ -16,5 +16,6 @@ public interface BenefitMapper {
     List<Benefit> getAllBenefitByYear();
     List<Benefit> getAllBenefitByDep(Integer dep);
     List<Benefit> getAllBenefitByDepYear(Integer dep);
+    Benefit getBenefitById(Integer id);
 
 }

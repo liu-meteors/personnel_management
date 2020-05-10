@@ -45,7 +45,12 @@ public class BenefitServiceImpl implements BenefitService {
 
     @Override
     public int updateBen(Benefit benefit) {
-        return updateBen(benefit);
+        System.out.println(benefit);
+        Benefit oldBenefit=benefitMapper.getBenefitById(benefit.getId());
+        oldBenefit.setIsFillIn(1);
+        oldBenefit.setMoney(benefit.getMoney());
+        oldBenefit.setFillInDate(new Date());
+        return benefitMapper.updateBen(oldBenefit);
     }
 
     @Override
@@ -91,24 +96,35 @@ public class BenefitServiceImpl implements BenefitService {
         calendar.setTime(new Date());
         int month=calendar.get(Calendar.MONTH)+1;
         if (benefitList.size()==0){
+            System.out.println("无纸");
             Benefit benefit1=new Benefit();
             benefit1.setFillInDate(new Date());
             benefit1.setDepartment(dep);
-            benefit1.setQuarter(getQuarter(month));
+            int quarter=getQuarter(month);
+            if (quarter==1){
+                benefit1.setQuarter(4);
+                benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)-1));
+            }else {
+                benefit1.setQuarter(quarter-1);
+                benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)));
+
+            }
             benefit1.setId(1);
             benefit1.setMoney(0);
-            benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)));
             benefit1.setIsFillIn(0);
             benefit1=setDepartmentName(benefit1,departments);
+            benefitMapper.addBen(benefit1);
             benefitList.add(benefit1);
         }else {
-
-            for (int i=0;i<benefitList.size();i++){
-                benefitList.set(i,setDepartmentName(benefitList.get(i),departments));
-            }
+            System.out.println("youzhi");
             Benefit benefit=getNoFill(benefitList.get(benefitList.size()-1),departments);
             if(benefit!=null){
-                benefitList.add(benefit);
+                System.out.println("charu");
+                benefitMapper.addBen(benefit);
+            }
+            benefitList=benefitMapper.getAllBenefitByDepYear(dep);
+            for (int i=0;i<benefitList.size();i++){
+                benefitList.set(i,setDepartmentName(benefitList.get(i),departments));
             }
         }
         System.out.println("今年的效益信息：：："+benefitList);
@@ -154,36 +170,39 @@ public class BenefitServiceImpl implements BenefitService {
         }
         return benefit;
     }
-
+    /**
+            * @Description: 如果当前季度应填的效益没有填，则添加
+            * @Param:  * @Param: benefit
+     * @Param: departments
+            * @return:
+            * @Author: liujingyu
+            * @Date:
+            */
     public Benefit getNoFill(Benefit benefit,List<Department> departments){
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(new Date());
         Benefit benefit1=new Benefit();
         int quarter=getQuarter(calendar.get(Calendar.MONTH)+1);
-        if (quarter!=benefit.getQuarter()){
+        if (Math.abs(quarter-benefit.getQuarter())==2){
+            System.out.println("上季度没有填写");
+            if (quarter==1){
+                benefit1.setQuarter(4);
+                benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)-1));
+            }else {
+                benefit1.setQuarter(quarter-1);
+                benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)));
 
+            }
             benefit1.setFillInDate(new Date());
             benefit1.setDepartment(benefit.getDepartment());
-            benefit1.setQuarter(quarter);
-            benefit1.setId(benefit.getId()+1);
             benefit1.setMoney(0);
-            benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)));
             benefit1.setIsFillIn(0);
-            benefit1=setDepartmentName(benefit1,departments);
-            return benefit1;
-        }else if (quarter-benefit.getQuarter()>0){
-            benefit1.setFillInDate(new Date());
-            benefit1.setDepartment(benefit.getDepartment());
-            benefit1.setQuarter(quarter);
-            benefit1.setId(benefit.getId()+1);
-            benefit1.setMoney(0);
-            benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)));
-            benefit1=setDepartmentName(benefit1,departments);
-            benefit1.setIsFillIn(1);
-            benefitMapper.addBen(benefit1);
+
             return benefit1;
         }else {
+            System.out.println("上季度填写了");
             return null;
         }
+
     }
 }

@@ -44,4 +44,11 @@ public class BenefitController {
         int isSuccess=benefitService.addBen(benefit);
         return ReturnUtils.isSuccess(isSuccess);
     }
+    @PutMapping("/updateBenefit")
+    public String updateBenefit(@RequestBody Benefit benefit){
+        System.out.println("修改"+benefit);
+        int isSuccess=benefitService.updateBen(benefit);
+        return ReturnUtils.isSuccess(isSuccess);
+    }
+
 }

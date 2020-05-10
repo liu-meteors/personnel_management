@@ -1,5 +1,6 @@
 package com.meteor;
 
+import com.meteor.mapper.BenefitMapper;
 import com.meteor.mapper.PositionMapper;
 import com.meteor.pojo.*;
 import com.meteor.service.*;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -23,13 +25,17 @@ class PersonnelManagementApplicationTests {
     EmployeeService employeeService;
     @Autowired
     AdminService adminService;
+    @Autowired
+    BenefitMapper benefitMapper;
+    @Autowired
+    BenefitService benefitService;
 
     @Test
     void contextLoads() throws Exception {
-       List<Employee> employees=employeeService.getAll();
-       for (Employee employee:employees){
-           System.out.println(AESOperator.decrypt(employee.getPassword()));
-       }
+        Benefit benefit=new Benefit();
+        benefit.setMoney(100);
+        benefit.setFillInDate(new Date());
+        System.out.println(benefitService.updateBen(benefit));
     }
 
 
