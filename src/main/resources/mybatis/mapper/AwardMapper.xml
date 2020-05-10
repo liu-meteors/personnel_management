@@ -18,6 +18,9 @@
     <select id="getAllAwardByEmpNow" resultType="com.meteor.pojo.Award">
         SELECT * FROM award WHERE PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(recordDate,'%Y%m')) =1 and where empid=#{empId}
     </select>
+    <select id="getAllAwardByEmpYear" resultType="com.meteor.pojo.Award">
+        select * from award where YEAR(recordDate)=YEAR(NOW()) and id = #{empId}
+    </select>
     <insert id="addAward" parameterType="com.meteor.pojo.Award">
         insert into award (id,empid,money,awardType,awardDescribe,recordDate) values (#{id},#{empId},#{money},#{awardType},#{awardDescribe},#{recordDate,jdbcType=DATE})
     </insert>

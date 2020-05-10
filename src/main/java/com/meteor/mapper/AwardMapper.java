@@ -73,4 +73,12 @@ public interface AwardMapper {
             */
     int addAward(Award award);
     List<Award> getAllAwardByEmpNow(Integer empId);
+    /**
+     * @Description:  查询本年的奖惩情况
+     * @Param:  * @Param: empId
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    List<Award> getAllAwardByEmpYear(Integer empId);
 }

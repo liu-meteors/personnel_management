@@ -176,6 +176,23 @@ class AwardServiceImpl implements AwardService {
         return awardMapper.getAllAwardByEmpNow(empId);
     }
 
+    @Override
+    public List<Award> getAllAwardByEmpYear(Integer empId) {
+        List<Award> awards=awardMapper.getAllAwardByEmpYear(empId);
+        List<Employee> employees=employeeMapper.getAll();
+        for (int i=0;i<awards.size();i++){
+            for (int j=0;j<employees.size();j++){
+                Award award= setAwardInformation(awards.get(i),employees.get(j));
+                if (award!=null){
+                    awards.set(i,award);
+                }
+            }
+            awards.get(i).setRecordDateStr(simpleDateFormat.format(awards.get(i).getRecordDate()));
+        }
+        System.out.println("员工端奖惩"+awards);
+        return awards;
+    }
+
     public Award setAwardInformation(Award award,Employee employee){
         if (award.getEmpId()==employee.getId()){
             award.setEmpName(employee.getUsername());

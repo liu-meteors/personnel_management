@@ -72,4 +72,10 @@ public class AwardController {
             return mouthAwards;
     }
 
+
+    @GetMapping("/getAllAwardByEmpYear/{id}")
+    public List<Award> getAllAwardByEmpYear(@PathVariable("id") Integer empId){
+        return awardService.getAllAwardByEmpYear(empId);
+    }
+
 }
