@@ -7,6 +7,7 @@ import com.meteor.pojo.Department;
 import com.meteor.pojo.Employee;
 import com.meteor.pojo.Position;
 import com.meteor.service.EmployeeService;
+import com.meteor.untils.AESOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             employees.get(i).setSignDateStr(simpleDateFormat.format( employees.get(i).getSignDate()));
             employees.get(i).setOverDateStr(simpleDateFormat.format( employees.get(i).getOverDate()));
+            employees.get(i).setPassword(AESOperator.decrypt(employees.get(i).getPassword()));
         }
         return employees;
     }
@@ -77,6 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         employee.setSignDateStr(simpleDateFormat.format(employee.getSignDate()));
         employee.setOverDateStr(simpleDateFormat.format(employee.getOverDate()));
+        employee.setPassword(AESOperator.decrypt(employee.getPassword()));
         System.out.println("修改：：："+employee.toString());
         return employee;
     }
@@ -96,6 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public int addEmployee(Employee employee) {
+        employee.setPassword(AESOperator.encrypt(employee.getPassword()));
         return employeeMapper.addEmployee(employee);
     }
 
@@ -122,6 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public int updateEmployee(Employee employee) {
+        employee.setPassword(AESOperator.encrypt(employee.getPassword()));
         return employeeMapper.updateEmployee(employee);
     }
 
@@ -155,6 +160,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setSignDateStr(simpleDateFormat.format(employee.getSignDate()));
         employee.setOverDateStr(simpleDateFormat.format(employee.getOverDate()));
         String[] strings={employee.getSignDateStr(),employee.getOverDateStr()};
+        employee.setPassword(AESOperator.decrypt(employee.getPassword()));
         employee.setStartToOver(strings);
         System.out.println("修改：：："+employee.toString());
         return employee;
@@ -171,7 +177,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String getLastEmpNumber() {
         return employeeMapper.getLastEmpNumber();
     }
-
+    /**
+            * @Description: 根据部门职位查询员工
+            * @Param:  * @Param: dep
+ * @Param: pos
+            * @return:
+            * @Author: liujingyu
+            * @Date:
+            */
     @Override
     public List<Employee> getAllEmpByDepPos(Integer dep, Integer pos) {
         List<Employee> employees=employeeMapper.getAllEmpByDepPos(dep,pos);
@@ -193,10 +206,17 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             employees.get(i).setSignDateStr(simpleDateFormat.format( employees.get(i).getSignDate()));
             employees.get(i).setOverDateStr(simpleDateFormat.format( employees.get(i).getOverDate()));
+            employees.get(i).setPassword(AESOperator.decrypt(employees.get(i).getPassword()));
         }
         return employees;
     }
-
+    /**
+            * @Description: 根据职位查询员工
+            * @Param:  * @Param: pos
+            * @return:
+            * @Author: liujingyu
+            * @Date:
+            */
     @Override
     public List<Employee> getEmpByPos(Integer pos) {
         List<Employee> employees=employeeMapper.getEmpByPos(pos);
@@ -218,6 +238,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             employees.get(i).setSignDateStr(simpleDateFormat.format( employees.get(i).getSignDate()));
             employees.get(i).setOverDateStr(simpleDateFormat.format( employees.get(i).getOverDate()));
+            employees.get(i).setPassword(AESOperator.decrypt(employees.get(i).getPassword()));
         }
         return employees;
     }

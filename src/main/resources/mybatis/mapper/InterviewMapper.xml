@@ -13,7 +13,7 @@
         where id=#{id}
     </update>
     <delete id="deleteInterviewById" parameterType="integer">
-        delete * from interview where id=#{id}
+        delete  from interview where id=#{id}
     </delete>
 
     <select id="getAllInterview" resultType="com.meteor.pojo.Interview">

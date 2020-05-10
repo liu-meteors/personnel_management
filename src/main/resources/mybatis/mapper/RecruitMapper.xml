@@ -13,7 +13,7 @@
         insert into recruit (id,department,position,salary,information) values (#{id},#{department},#{position},#{salary},#{information})
     </insert>
     <delete id="deleteRecruitById" parameterType="integer">
-        delete * from recruit where id=#{id}
+        delete  from recruit where id=#{id}
     </delete>
     <update id="updateRecruit" parameterType="com.meteor.pojo.Recruit">
         update recruit set id=#{id},department=#{department},position=#{position},salary=#{salary},information=#{information} where id=#{id}

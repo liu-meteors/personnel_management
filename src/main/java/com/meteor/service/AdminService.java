@@ -1,6 +1,7 @@
 package com.meteor.service;
 
 import com.meteor.pojo.Admin;
+import com.meteor.pojo.Employee;
 
 public interface AdminService {
     /**
@@ -35,4 +36,12 @@ public interface AdminService {
      * @Date:
      */
     int updateAdmin(Admin admin);
+    /**
+            * @Description: 设置管理员信息
+            * @Param:  * @Param: employee
+            * @return:
+            * @Author: liujingyu
+            * @Date:
+            */
+    Admin setAdmin(Employee employee);
 }

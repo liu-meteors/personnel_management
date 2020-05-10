@@ -13,7 +13,7 @@
         insert into dimission (id,username,empnumber,leavedate,department,position,handover,isover,phone) values (#{id},#{username},#{empNumber},#{leaveDate,jdbcType=DATE},#{department},#{position},#{handover},#{isOver},#{phone});
     </insert>
     <delete id="deleteDimission" parameterType="integer">
-        delete * from dimission where id=#{id}
+        delete  from dimission where id=#{id}
     </delete>
     <update id="updateDimission" parameterType="com.meteor.pojo.Dimission">
         update dimission set id=#{id},username=#{username},empnumber=#{empNumber},leavedate=#{leaveDate,jdbcType=DATE},department=#{department},position=#{position},handover=#{handover},isover=#{isOver},phone=#{phone}

@@ -7,12 +7,12 @@
         select * from admin where username = #{username}
     </select>
     <insert id="addAdmin" parameterType="com.meteor.pojo.Admin">
-        insert into admin (id,empid,username,password,depid) values (#{id},#{empId},#{username},#{password}},#{depId})
+        insert into admin (id,empid,username,password,depid,adminName) values (#{id},#{empId},#{username},#{password},#{depId},#{adminName})
     </insert>
     <delete id="deleteAdminById" parameterType="integer">
-        delete * from admin where id = #{id}
+        delete  from admin where empid = #{id}
     </delete>
     <update id="updateAdmin" parameterType="com.meteor.pojo.Admin">
-        update admin set username=#{username},password=#{password},empid=#{empId},depid=#{depId} where id = #{id}
+        update admin set username=#{username},password=#{password},empid=#{empId},depid=#{depId},adminName=#{adminName} where id = #{id}
     </update>
 </mapper>

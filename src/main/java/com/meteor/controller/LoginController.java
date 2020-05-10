@@ -46,7 +46,7 @@ public class LoginController {
                     sessions.put("admin"+admin.getId(),session);
                     System.out.println("登录成功");
                     reposeMap.put("code","200");
-                    reposeMap.put("user",username);
+                    reposeMap.put("user",admin.getAdminName());
                     reposeMap.put("id",admin.getId());
                     reposeMap.put("dep",admin.getDepId());
                     reposeMap.put("identity","admin");

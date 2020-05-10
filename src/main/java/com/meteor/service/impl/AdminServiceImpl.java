@@ -2,7 +2,9 @@ package com.meteor.service.impl;
 
 import com.meteor.mapper.AdminMapper;
 import com.meteor.pojo.Admin;
+import com.meteor.pojo.Employee;
 import com.meteor.service.AdminService;
+import com.meteor.untils.AESOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,9 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Admin getAdminByName(String username) {
-
-        return adminMapper.getAdminByName(username);
+        Admin admin=adminMapper.getAdminByName(username);
+        admin.setPassword(AESOperator.decrypt(admin.getPassword()));
+        return admin;
     }
 
     /**
@@ -68,5 +71,18 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int updateAdmin(Admin admin) {
         return adminMapper.updateAdmin(admin);
+    }
+
+    @Override
+    public Admin setAdmin(Employee employee){
+        Admin admin=new Admin();
+        admin.setAdminName(employee.getUsername());
+        admin.setDepId(employee.getDepartment());
+        admin.setEmpId(employee.getId());
+        admin.setUsername(employee.getEmpNumber());
+        admin.setPassword(employee.getPassword());
+        System.out.println("添加的管理员的员工信息"+employee);
+        System.out.println("添加的管理员信息"+admin);
+        return admin;
     }
 }

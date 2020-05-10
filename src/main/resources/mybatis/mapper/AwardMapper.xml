@@ -22,7 +22,7 @@
         insert into award (id,empid,money,awardType,awardDescribe,recordDate) values (#{id},#{empId},#{money},#{awardType},#{awardDescribe},#{recordDate,jdbcType=DATE})
     </insert>
     <delete id="deleteAwardByEmpId" parameterType="integer">
-        delete * from award where empid=#{id}
+        delete  from award where empid=#{id}
     </delete>
     <delete id="deleteAwardById" parameterType="integer">
          delete  from award where id=#{id}

@@ -1,9 +1,12 @@
 package com.meteor.controller;
 
 import com.meteor.mapper.PromotionMapper;
+import com.meteor.pojo.Admin;
 import com.meteor.pojo.Employee;
 import com.meteor.pojo.Promotion;
+import com.meteor.service.AdminService;
 import com.meteor.service.EmployeeService;
+import com.meteor.untils.AESOperator;
 import com.meteor.untils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +21,8 @@ public class EmployeeController {
     EmployeeService employeeService;
     @Autowired
     PromotionMapper promotionMapper;
-
+    @Autowired
+    AdminService adminService;
     @RequestMapping("/getEmp")
     public List<Employee> getAll(){
         return employeeService.getAll();
@@ -38,8 +42,13 @@ public class EmployeeController {
         employee.setEmpNumber(newNumber);
         System.out.println(employee.toString());
         int i=employeeService.addEmployee(employee);
+        if (employee.getPosite()==1){
+           adminService.addAdmin(adminService.setAdmin(employee));
+        }
         if (i>0){
+
             return "success";
+
         }else {
             return "error";
         }
@@ -54,15 +63,24 @@ public class EmployeeController {
 //        } catch (ParseException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println("修改后：：：："+employee);
+
         Employee oldEmployee=employeeService.getEmployeeById(employee.getId());
         if (!employee.getStartToOver()[0].equals(oldEmployee.getStartToOver()[0])&&!employee.getStartToOver()[1].equals(oldEmployee.getStartToOver()[1])){
             employee.setSignDate(DateUtils.dealDateFormat(employee.getStartToOver()[0]));
             employee.setOverDate(DateUtils.dealDateFormat(employee.getStartToOver()[1]));
         }
        int isSuccess= employeeService.updateEmployee(employee);
+        System.out.println("修改后：：：："+employee);
         if (isSuccess>0){
+            // 如果职位发生了改变
             if (oldEmployee.getPosite()!=employee.getPosite()){
+                // 改变职位为主管时
+                if (employee.getPosite()==1){
+                    adminService.addAdmin(adminService.setAdmin(employee));
+                }
+                if (oldEmployee.getPosite()==1){
+                    adminService.deleteAdminById(oldEmployee.getId());
+                }
                 Promotion promotion=new Promotion();
                 promotion.setEmpId(employee.getId());
                 promotion.setOldPosition(oldEmployee.getPosite());
@@ -74,6 +92,15 @@ public class EmployeeController {
                     promotion.setTransferred("升职");
                 }
                 promotionMapper.addPromotion(promotion);
+                // 当更改主管其他信息的时候管理员信息也更新
+            }else if (employee.getPosite()==1){
+                //姓名更改的时候修改姓名
+                System.err.println(employee);
+                    Admin oldAdmin=adminService.getAdminByName(oldEmployee.getEmpNumber());
+                    oldAdmin.setAdminName(employee.getUsername());
+                    oldAdmin.setPassword(employee.getPassword());
+                    oldAdmin.setDepId(employee.getDepartment());
+                    adminService.updateAdmin(oldAdmin);
             }
             return "success";
         }else {
