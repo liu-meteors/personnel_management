@@ -11,7 +11,13 @@ spring:
       enabled: true
       max-file-size: 100MB
       max-request-size: 100MB
+  mail:
+    host: smtp.163.com
+    protocol: smtp
+    default-encoding: UTF-8
+    password: EUFNOKGZLIPZCBJA
+    username: ljy7727meteor@163.com
+    test-connection: true
 mybatis:
   type-aliases-package: com.meteo.pojo
   mapper-locations: classpath:mybatis/mapper/*.xml
-

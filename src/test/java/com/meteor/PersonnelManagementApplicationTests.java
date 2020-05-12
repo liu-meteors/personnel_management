@@ -14,28 +14,15 @@ import java.util.List;
 
 @SpringBootTest
 class PersonnelManagementApplicationTests {
-
     @Autowired
-    ContractService contractService;
-    @Autowired
-    DepartmentService departmentService;
-    @Autowired
-    PositionMapper positionMapper;
-    @Autowired
-    EmployeeService employeeService;
-    @Autowired
-    AdminService adminService;
-    @Autowired
-    BenefitMapper benefitMapper;
-    @Autowired
-    BenefitService benefitService;
+    InterviewService interviewService;
 
     @Test
     void contextLoads() throws Exception {
-        Benefit benefit=new Benefit();
-        benefit.setMoney(100);
-        benefit.setFillInDate(new Date());
-        System.out.println(benefitService.updateBen(benefit));
+        String mail="1286717282@qq.com";
+        String filePath="D:\\IdeaProjects\\personnel_management\\src\\main\\resources\\InterviewFile\\desc.txt";
+        String content="jjjjjjjjjjjfiohfioewhfuiewhfuweuifhweiufhweuihfiweuhfuiewhuiwehfhuiweehfuiwbvbrhbvhrjbgjghegierngkerjg";
+        interviewService.sendSimpleTextMailActual("测试",content,new String[]{mail},null,null,new String[]{filePath});
     }
 
 

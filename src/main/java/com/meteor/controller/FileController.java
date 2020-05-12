@@ -194,4 +194,27 @@ public class FileController {
         }
         return null;
     }
+
+
+
+    @PostMapping("/importMail")
+    public Map<String,String> importMail(MultipartFile file, HttpServletRequest req) throws IOException {
+        String realPath = req.getServletContext().getRealPath("/upload") + "/mail";
+        System.out.println(realPath);
+        File folder = new File(realPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        String oldName = file.getOriginalFilename();
+        String newName = UUID.randomUUID().toString() + oldName.substring(oldName.lastIndexOf("."));
+        file.transferTo(new File(folder,newName));
+        String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/upload" + "/interview/" + newName;
+        System.out.println(url);
+        System.out.println(realPath+"/"+newName);
+        String fileAddress=realPath+"/"+newName;
+        Map<String,String> map=new HashMap<>();
+        map.put("fileAddress",fileAddress);
+        map.put("fileName",newName);
+        return map;
+    }
 }
