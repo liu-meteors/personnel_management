@@ -109,7 +109,6 @@ public class BenefitServiceImpl implements BenefitService {
                 benefit1.setBenYear(String.valueOf(calendar.get(Calendar.YEAR)));
 
             }
-            benefit1.setId(1);
             benefit1.setMoney(0);
             benefit1.setIsFillIn(0);
             benefit1=setDepartmentName(benefit1,departments);
