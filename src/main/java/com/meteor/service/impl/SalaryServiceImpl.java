@@ -1,17 +1,13 @@
 package com.meteor.service.impl;
 
+import com.meteor.mapper.PositionMapper;
 import com.meteor.mapper.SalaryMapper;
-import com.meteor.pojo.Award;
-import com.meteor.pojo.Employee;
-import com.meteor.pojo.Grade;
-import com.meteor.pojo.Salary;
-import com.meteor.service.AwardService;
-import com.meteor.service.EmployeeService;
-import com.meteor.service.GradeService;
-import com.meteor.service.SalaryService;
+import com.meteor.pojo.*;
+import com.meteor.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +29,11 @@ public class SalaryServiceImpl implements SalaryService {
     GradeService gradeService;
     @Autowired
     EmployeeService employeeService;
+    @Autowired
+    DepartmentService departmentService;
+    @Autowired
+    PositionMapper positionMapper;
+
 
     @Override
     public int addSalary(Integer empId) {
@@ -69,8 +70,8 @@ public class SalaryServiceImpl implements SalaryService {
             int month=nowCalendar.get(Calendar.MONTH)-empCalendar.get(Calendar.MONTH);
             if (Math.abs(month)==1||Math.abs(month)==11){
                 //基本工资
-                baseMoney=employee.getSalary()*((empCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)-empCalendar.get(Calendar.DAY_OF_MONTH))/empCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-                salaryMoney+=baseMoney;
+                baseMoney= (float) (employee.getSalary()*((empCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)-empCalendar.get(Calendar.DAY_OF_MONTH))/(1.0*empCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))));
+                salary.setMoney(baseMoney);
                 salary.setMoney(baseMoney);
             }else {
                 salaryMoney+=employee.getSalary();
@@ -137,12 +138,14 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public int updateSalary(Salary salary) {
-        return 0;
+        return salaryMapper.updateSalary(salary);
     }
 
     @Override
     public List<Salary> getAllSalary() {
-        return null;
+        List<Salary> salaries=salaryMapper.getAllSalary();
+        salaries=setSalaryName(salaries);
+        return salaries;
     }
 
     @Override
@@ -167,10 +170,24 @@ public class SalaryServiceImpl implements SalaryService {
     public Salary getSalaryByEmpNow(Integer id) {
         Employee employee=employeeService.getEmployeeById(id);
         Salary salary=salaryMapper.getSalaryByEmpNow(id);
+        List<Department> departments=departmentService.getAll();
+        List<Position> positions=positionMapper.getAllPosition();
         if (salary!=null){
 
             salary.setEmpNumber(employee.getEmpNumber());
             salary.setName(employee.getUsername());
+            for (int k=0;k<departments.size();k++){
+                if (employee.getDepartment()==departments.get(k).getId()){
+                    salary.setDepartmentName(departments.get(k).getName());
+                    break;
+                }
+            }
+            for (int m=0;m<positions.size();m++){
+                if (employee.getPosite()==positions.get(m).getId()){
+                    salary.setPositionName(positions.get(m).getName());
+                    break;
+                }
+            }
         }
         return salary;
     }
@@ -179,21 +196,38 @@ public class SalaryServiceImpl implements SalaryService {
     public List<Salary> getAllSalaryNow() {
         List<Salary> salaries=salaryMapper.getAllSalaryNow();
         salaries=setSalaryName(salaries);
-        System.out.println("管理员端当月工资"+salaries);
         return salaries;
     }
 
 
     public List<Salary> setSalaryName(List<Salary> salaries){
+        List<Department> departments=departmentService.getAll();
+        List<Position> positions=positionMapper.getAllPosition();
         List<Employee> employees=employeeService.getAll();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月");
         for (int i=0;i<salaries.size();i++){
             for (int j=0;j<employees.size();j++){
                 if (salaries.get(i).getEmpId()==employees.get(j).getId()){
                     salaries.get(i).setName(employees.get(j).getUsername());
                     salaries.get(i).setEmpNumber(employees.get(j).getEmpNumber());
+                    for (int k=0;k<departments.size();k++){
+                        if (employees.get(j).getDepartment()==departments.get(k).getId()){
+                            salaries.get(i).setDepartmentName(departments.get(k).getName());
+                            break;
+                        }
+                    }
+                    for (int m=0;m<positions.size();m++){
+                        if (employees.get(j).getPosite()==positions.get(m).getId()){
+                            salaries.get(i).setPositionName(positions.get(m).getName());
+                            break;
+                        }
+                    }
                     break;
                 }
+
             }
+            salaries.get(i).setPayDateStr(simpleDateFormat.format(salaries.get(i).getPayDate()));
+
         }
         return salaries;
     }

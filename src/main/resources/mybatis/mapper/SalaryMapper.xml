@@ -16,7 +16,7 @@
         forfeit=#{forfeit},gradeMoney=#{gradeMoney},allMoney=#{allMoney} where id=#{id}
     </update>
     <select id="getAllSalary" resultType="com.meteor.pojo.Salary">
-        select * from salary
+        select * from salary order by id desc
     </select>
     <select id="getAllSalaryByEmp" resultType="com.meteor.pojo.Salary">
         select * from salary where empId=#{id}
@@ -25,10 +25,10 @@
          select * from salary where empId=#{id} order by id desc limit 1
     </select>
     <select id="getSalaryByEmpNow" resultType="com.meteor.pojo.Salary">
-        SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m') and  empId=#{id}
+        SELECT * FROM salary WHERE  PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( payDate, '%Y%m' ) ) =1 and  empId=#{id}
     </select>
     <select id="getAllSalaryNow" resultType="com.meteor.pojo.Salary">
-        SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m')
+        SELECT * FROM salary WHERE PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( payDate, '%Y%m' ) ) =1
     </select>
     <!--    SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m') and where empId=#{id}-->
 </mapper>

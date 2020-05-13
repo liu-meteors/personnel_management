@@ -1,6 +1,7 @@
 package com.meteor;
 
 import com.meteor.controller.LoginController;
+import com.meteor.controller.SalaryController;
 import com.meteor.mapper.BenefitMapper;
 import com.meteor.mapper.PositionMapper;
 import com.meteor.mapper.SalaryMapper;
@@ -17,23 +18,13 @@ import java.util.List;
 
 @SpringBootTest
 class PersonnelManagementApplicationTests {
-    @Autowired
-    LoginController loginController;
-    @Autowired
-    SalaryService salaryService;
-    @Autowired
-    EmployeeService employeeService;
 
+
+    @Autowired
+    SalaryController salaryController;
     @Test
     void contextLoads() throws Exception {
-        loginController.setSalary();
-//        List<Employee> employees=employeeService.getAll();
-//        for (Employee employee: employees){
-//            Salary salary=salaryService.getSalaryByEmp(employee.getId());
-//            if (salary!=null){
-//                System.err.println(employee.getUsername());
-//            }
-//        }
+        salaryController.getSalaryByEmpNow(2);
     }
 
 

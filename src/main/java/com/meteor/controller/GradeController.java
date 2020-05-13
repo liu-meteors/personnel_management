@@ -30,6 +30,7 @@ public class GradeController {
         List<Employee> employees=new ArrayList<>();
         if (employee.getPosite()==1){
             List<Employee> peers =employeeService.getEmpByPos(1);
+            peers.remove(0);
             List<Employee> down=employeeService.getAllEmpByDepPos(employee.getDepartment(),employee.getPosite()+1);
             employees.addAll(peers);
             employees.addAll(down);
@@ -38,6 +39,7 @@ public class GradeController {
             List<Employee> up=employeeService.getAllEmpByDepPos(employee.getDepartment(),employee.getPosite()-1);
             List<Employee> peers=employeeService.getAllEmpByDepPos(employee.getDepartment(),employee.getPosite());
             List<Employee> down=employeeService.getAllEmpByDepPos(employee.getDepartment(),employee.getPosite()+1);
+            up.remove(0);
             employees.addAll(down);
             employees.addAll(peers);
             employees.addAll(up);

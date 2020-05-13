@@ -163,7 +163,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         String[] strings={employee.getSignDateStr(),employee.getOverDateStr()};
         employee.setPassword(AESOperator.decrypt(employee.getPassword()));
         employee.setStartToOver(strings);
-        System.out.println("修改：：："+employee.toString());
         return employee;
     }
 

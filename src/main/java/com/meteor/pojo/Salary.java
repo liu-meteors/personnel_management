@@ -27,4 +27,7 @@ public class Salary {
     private Float allMoney;
     private String name;
     private String empNumber;
+    private String departmentName;
+    private String positionName;
+    private String payDateStr;
 }
