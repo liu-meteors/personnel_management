@@ -16,7 +16,7 @@
         select * from award where type = #{type}
     </select>
     <select id="getAllAwardByEmpNow" resultType="com.meteor.pojo.Award">
-        SELECT * FROM award WHERE PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(recordDate,'%Y%m')) =1 and where empid=#{empId}
+        SELECT * FROM award WHERE PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(recordDate,'%Y%m')) =1 and  empid=#{empId}
     </select>
     <select id="getAllAwardByEmpYear" resultType="com.meteor.pojo.Award">
         select * from award where YEAR(recordDate)=YEAR(NOW()) and id = #{empId}

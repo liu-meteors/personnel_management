@@ -1,6 +1,5 @@
 package com.meteor.service.impl;
 
-import com.meteor.mapper.AwardMapper;
 import com.meteor.mapper.SalaryMapper;
 import com.meteor.pojo.Award;
 import com.meteor.pojo.Employee;
@@ -13,6 +12,7 @@ import com.meteor.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,41 +36,97 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public int addSalary(Integer empId) {
+        Calendar nowCalendar=Calendar.getInstance();
+        nowCalendar.setTime(new Date());
+        Calendar empCalendar=Calendar.getInstance();
         Salary salary=new Salary();
         salary.setEmpId(empId);
+        //获取奖惩信息
         List<Award> awards=awardService.getAllAwardByEmpNow(empId);
+        // 获取考核分数
         List<Grade> grades=gradeService.getAllGradeByToEmp(empId);
+        // 获取用户信息
         Employee employee=employeeService.getEmployeeById(empId);
+        empCalendar.setTime(employee.getSignDate());
+        /**
+         * 基本工资
+         */
+        Float baseMoney=0.0f;
+        // 总工资
         Float salaryMoney=0.0f;
+        // 奖金
         Float bonus=0.0f;
+        // 罚金
         Float forfeit=0.0f;
+        // 效益工资
         int tempGrade=0;
-        double grade=0.0;
+        float grade=0.0f;
+        //绩效工资
+        float gradeMoney=0.0f;
+        // 判断是不是今年之前入的值
+        if (empCalendar.get(Calendar.YEAR)<=nowCalendar.get(Calendar.YEAR)){
+            // 如果是上个月入职
+            int month=nowCalendar.get(Calendar.MONTH)-empCalendar.get(Calendar.MONTH);
+            if (Math.abs(month)==1||Math.abs(month)==11){
+                //基本工资
+                baseMoney=employee.getSalary()*((empCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)-empCalendar.get(Calendar.DAY_OF_MONTH))/empCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+                salaryMoney+=baseMoney;
+                salary.setMoney(baseMoney);
+            }else {
+                salaryMoney+=employee.getSalary();
+                salary.setMoney(employee.getSalary());
+            }
+        }
+//        System.out.println("奖惩信息："+awards);
+//        System.out.println("考核分数"+grades);
+        // 计算平均分
         if (grades.size()!=0){
 
             for (int i=0;i<grades.size();i++){
                 tempGrade+=grades.get(i).getGrade();
             }
-            grade=tempGrade*1.0/grades.size();
+            System.out.println("总分数"+tempGrade);
+            grade= (float) (tempGrade*1.0/grades.size());
         }
+        // 不同职位效益工资的基准不同
+        switch (employee.getPosite()){
+            case 1:
+                gradeMoney=grade*6000/100;
+                break;
+            case 2:
+                gradeMoney=grade*4000/100;
+                break;
+            case 3:
+                gradeMoney=grade*2000/100;
+                break;
+        }
+        salary.setGradeMoney(gradeMoney);
+        salaryMoney+=gradeMoney;
         if (awards.size()!=0){
             for (Award award:awards) {
+                // 如果是奖励
                 if (award.getAwardType()==1){
                     salaryMoney+=award.getMoney();
                     bonus+=award.getMoney();
-
+                    // 惩罚
                 }else {
                     salaryMoney-=award.getMoney();
                     forfeit+=award.getMoney();
                 }
             }
         }
-        salaryMoney+=employee.getSalary();
+
         salary.setAllMoney(salaryMoney);
         salary.setBonus(bonus);
         salary.setForfeit(forfeit);
-        salary.setMoney(employee.getSalary());
-        salary.setPayDate(new Date());
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH,-1);
+        salary.setPayDate(calendar.getTime());
+        System.out.println("工资信息"+salary);
+        gradeService.deleteGrade(100);
+//        return salaryMapper.addSalary(salary);
+        gradeService.deleteGrade(empId);
         return salaryMapper.addSalary(salary);
     }
 
@@ -94,9 +150,17 @@ public class SalaryServiceImpl implements SalaryService {
         return null;
     }
 
+
+    /**
+     * @Description: 查询上个月的工资
+     * @Param: * @Param: id
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
     @Override
     public Salary getSalaryByEmp(Integer id) {
-        return null;
+        return salaryMapper.getSalaryByEmp(id);
     }
 
     @Override
@@ -133,4 +197,5 @@ public class SalaryServiceImpl implements SalaryService {
         }
         return salaries;
     }
+
 }

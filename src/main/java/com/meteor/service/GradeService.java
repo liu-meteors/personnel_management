@@ -12,5 +12,6 @@ public interface GradeService {
     int addGrade(Grade grade);
     int updateGrade(Grade grade);
     List<Grade> getAllGradeByToEmp(Integer id);
+    int deleteGrade(Integer id);
     public List<Employee> setEmpGrade(List<Employee> employees, Integer id);
 }

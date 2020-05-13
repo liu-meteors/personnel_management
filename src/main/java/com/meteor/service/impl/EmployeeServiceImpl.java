@@ -25,6 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAll() {
         List<Employee> employees=employeeMapper.getAll();
+        employees.remove(0);
         List<Department> departments=departmentMapper.getAll();
         List<Position> positions=positionMapper.getAllPosition();
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

@@ -3,6 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.meteor.mapper.GradeMapper">
+    <delete id="deleteGrade" parameterType="integer">
+        delete from grade where toGradeEmpId=#{id}
+    </delete>
     <select id="getAllGradeById" resultType="com.meteor.pojo.Grade">
         select * from grade where toGradeEmpId=#{id}
     </select>
@@ -17,6 +20,6 @@
         select * from grade where date_format(gradeDate,'%Y-%m')=date_format(now(),'%Y-%m') and fromGradeEmpId=#{id}
     </select>
     <select id="getAllGradeByToEmp" resultType="com.meteor.pojo.Grade">
-         SELECT * FROM grade WHERE PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(gradeDate,'%Y%m')) =1 and where toGradeEmpId=#{id}
+         SELECT * FROM grade WHERE toGradeEmpId=#{id}
     </select>
 </mapper>

@@ -30,6 +30,9 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Admin getAdminByName(String username) {
         Admin admin=adminMapper.getAdminByName(username);
+        if (admin==null){
+            return null;
+        }
         admin.setPassword(AESOperator.decrypt(admin.getPassword()));
         return admin;
     }

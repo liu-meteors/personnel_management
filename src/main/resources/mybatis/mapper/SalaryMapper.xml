@@ -22,7 +22,7 @@
         select * from salary where empId=#{id}
     </select>
     <select id="getSalaryByEmp"  resultType="com.meteor.pojo.Salary">
-         select * from salary where id=#{id}
+         select * from salary where empId=#{id} order by id desc limit 1
     </select>
     <select id="getSalaryByEmpNow" resultType="com.meteor.pojo.Salary">
         SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m') and  empId=#{id}

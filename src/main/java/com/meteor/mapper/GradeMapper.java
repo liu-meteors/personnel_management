@@ -15,6 +15,7 @@ public interface GradeMapper {
     List<Grade> getAllGradeByFromEmp(Integer id);
     List<Grade> getAllGradeByToEmp(Integer id);
     int addGrade(Grade grade);
+    int deleteGrade(Integer id);
     int updateGrade(Grade grade);
 
 

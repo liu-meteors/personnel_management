@@ -54,6 +54,11 @@ public class GradeServiceImpl implements GradeService {
         return gradeMapper.getAllGradeByToEmp(id);
     }
 
+    @Override
+    public int deleteGrade(Integer id) {
+        return gradeMapper.deleteGrade(id);
+    }
+
 
     public List<Employee> setEmpGrade(List<Employee> employees,Integer id){
         List<Grade> grades=getAllGradeBYDate(id);

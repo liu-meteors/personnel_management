@@ -15,6 +15,13 @@ public interface SalaryMapper {
     List<Salary> getAllSalary();
     List<Salary> getAllSalaryByEmp(Integer id);
     List<Salary> getAllSalaryNow();
+    /**
+            * @Description: 查询上个月的工资
+            * @Param:  * @Param: id
+            * @return:
+            * @Author: liujingyu
+            * @Date:
+            */
     Salary getSalaryByEmp(Integer id);
     Salary getSalaryByEmpNow(Integer id);
 }
