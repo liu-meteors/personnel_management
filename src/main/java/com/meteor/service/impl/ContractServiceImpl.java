@@ -41,7 +41,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public int updateContractById(Contract contract) {
-        return updateContractById(contract);
+        return contractMapper.updateContractById(contract);
     }
 
     @Override

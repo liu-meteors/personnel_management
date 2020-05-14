@@ -116,6 +116,7 @@ public class FileController {
     }
     @PostMapping("/importContract")
     public Map<String,String> importContract(MultipartFile file, HttpServletRequest req) throws IOException {
+        System.out.println("上传合同");
         String realPath = req.getServletContext().getRealPath("/upload") + "/contract";
         System.out.println(realPath);
         File folder = new File(realPath);
@@ -125,7 +126,7 @@ public class FileController {
         String oldName = file.getOriginalFilename();
         String newName = UUID.randomUUID().toString() + oldName.substring(oldName.lastIndexOf("."));
         file.transferTo(new File(folder,newName));
-        String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/upload" + "/interview/" + newName;
+        String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/upload" + "/contract/" + newName;
         System.out.println(url);
         System.out.println(realPath+"/"+newName);
         String fileAddress=realPath+"/"+newName;

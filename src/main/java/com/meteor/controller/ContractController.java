@@ -28,6 +28,7 @@ public class ContractController {
     }
     @PutMapping("/updateContract")
     public String updateContract(@RequestBody Contract contract){
+        System.out.println(contract);
         int isSuccess=contractService.updateContractById(contract);
         return ReturnUtils.isSuccess(isSuccess);
     }
