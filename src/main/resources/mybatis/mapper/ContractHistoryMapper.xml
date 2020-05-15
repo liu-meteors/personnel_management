@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.ContractHistoryMapper">
+    <insert id="addHistory" parameterType="com.meteor.pojo.ContractHistory">
+        insert into contracthistory (id,fileAddress,empId,submitDate) values (#{id},#{fileAddress},#{empId},#{submitDate,jdbcType=DATE});
+    </insert>
+    <delete id="deleteHistoryById" parameterType="integer">
+        delete from contracthistory where id=#{id}
+    </delete>
+    <update id="updateHistory" parameterType="com.meteor.pojo.ContractHistory">
+        update contracthistory set fileAddress=#{fileAddress} where id=#{id}
+    </update>
+
+    <select id="getAllHistoryByEmpId" parameterType="integer" resultType="com.meteor.pojo.ContractHistory">
+        select * from contracthistory where empId=#{empId} order by id desc
+    </select>
+    <select id="getHistoryById" parameterType="integer" resultType="com.meteor.pojo.ContractHistory">
+         select * from contracthistory where id=#{id}
+    </select>
+
+</mapper>
