@@ -9,6 +9,13 @@ public interface InterviewService {
     int deleteInterviewById(Integer id);
     int updateInterviewById(Interview interview);
     List<Interview> getAllInterview();
+    /**
+     * @Description: 获取当天面试信息
+     * @Param:  * @Param: id
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
     List<Interview> getAllInterviewNow();
     Interview getInterviewById(Integer id);
     /**

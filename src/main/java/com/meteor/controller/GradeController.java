@@ -54,6 +54,13 @@ public class GradeController {
 
         return employees;
     }
+    /** 
+            * @Description: 添加考核信息 
+            * @Param:  * @Param: grade
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @PostMapping("addGrade")
     public String addGrade(@RequestBody Grade grade){
         int isSuccess=gradeService.addGrade(grade);

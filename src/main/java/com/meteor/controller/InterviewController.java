@@ -21,7 +21,13 @@ import java.util.List;
 public class InterviewController {
     @Autowired
     InterviewService interviewService;
-
+    /** 
+            * @Description: 添加面试信息 
+            * @Param:  * @Param: interview
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @PostMapping("/addInterview")
     public String addInterview(@RequestBody Interview interview){
         System.out.println(interview);
@@ -29,10 +35,24 @@ public class InterviewController {
         return ReturnUtils.isSuccess(isSuccess);
 
     }
+    /**
+     * @Description: 获取当天面试信息
+     * @Param:  * @Param: id
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
     @GetMapping("/getAllInterviewNow")
     public List<Interview> getAllInterviewNow(){
         return interviewService.getAllInterviewNow();
     }
+    /** 
+            * @Description: 获取所有面试信息 
+            * @Param:  * @Param: 
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getAllInterview")
     public List<Interview> getAllInterview(){
         return interviewService.getAllInterview();
@@ -49,6 +69,15 @@ public class InterviewController {
         int isSuccess=interviewService.deleteInterviewById(id);
         return ReturnUtils.isSuccess(isSuccess);
     }
+    /** 
+            * @Description: 发送入职通知书 
+            * @Param:  * @Param: fileName
+ * @Param: id
+ * @Param: request
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/sendOffer/{fileName}/{id}")
     public String sendOffer(@PathVariable("fileName") String fileName, @PathVariable("id") Integer id, HttpServletRequest request){
         String realPath = request.getServletContext().getRealPath("/upload") + "/mail/";

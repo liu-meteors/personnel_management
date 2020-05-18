@@ -29,36 +29,82 @@ public class LeaveController {
     LeaveService leaveService;
     @Autowired
     EmployeeService employeeService;
-
+    /** 
+            * @Description: 获取所有请假信息 
+            * @Param:  * @Param: 
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getAllLeave")
     public List<Leave> getAllLeave(){
         return leaveService.getAllLeave();
     }
+    /** 
+            * @Description: 获取某个请假信息 
+            * @Param:  * @Param: id
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getLeaveById/{id}")
     public Leave getLeaveById(@PathVariable("id") Integer id){
         return leaveService.getLeaveById(id);
     }
+    /** 
+            * @Description: 添加请假申请 
+            * @Param:  * @Param: leave
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @PostMapping("/leaveApply")
     public String leaveApply(@RequestBody Leave leave){
         int isSuccess=leaveService.addLeave(leave);
         return ReturnUtils.isSuccess(isSuccess);
     }
+    /** 
+            * @Description: 获取某个员工的请假信息 
+            * @Param:  * @Param: empId
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getAllLeaveByEmp/{empId}")
     public List<Leave> getAllLeaveByEmp(@PathVariable("empId") Integer empId){
         return leaveService.getAllByEmpId(empId);
     }
-
+    /** 
+            * @Description: 修改请假信息 
+            * @Param:  * @Param: leave
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @PutMapping("/updateLeave")
     public String updateLeave(@RequestBody Leave leave){
         System.out.println(leave);
         int isSuccess=leaveService.updateLeave(leave);
         return  ReturnUtils.isSuccess(isSuccess);
     }
-
+    /** 
+            * @Description: 获取员工当前月的请假信息 
+            * @Param:  * @Param: empId
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getAllLeaveByEmpNow/{empId}")
     public List<Leave> getAllLeaveByEmpNow(@PathVariable("empId") Integer empId){
         return leaveService.getAllLeaveNow(empId);
     }
+    /** 
+            * @Description: 获得所有当前月的请假信息 
+            * @Param:  * @Param: 
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getAllAdminLeaveByNow")
     public List<Leave> getAllLeaveByNow(){
         return leaveService.getAllLeaveByNow();

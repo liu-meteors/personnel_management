@@ -21,37 +21,54 @@ import java.util.List;
 public class ContractHistoryController {
     @Autowired
     ContractHistoryService contractHistoryService;
-@GetMapping("/getAllHistoryByEmpId/{id}")
-public List<ContractHistory> getAllHistoryByEmpId(@PathVariable("id") Integer id){
-    return contractHistoryService.getAllHistoryByEmpId(id);
-}
-@GetMapping("/getDownHistoryByEmpId/{id}")
-public ContractHistory getDownHistoryByEmpId(@PathVariable("id") Integer id){
-    List<ContractHistory> contractHistories=contractHistoryService.getAllHistoryByEmpId(id);
-    if (contractHistories.size()==0){
-        return null;
-    }
-    return contractHistories.get(0);
-}
-@PostMapping("/addHistory")
-public String addHistory(@RequestBody ContractHistory contractHistory){
-    int isSuccess=contractHistoryService.addHistory(contractHistory);
-    return ReturnUtils.isSuccess(isSuccess);
-}
 
-@DeleteMapping("/deleteHistory/{id}")
-public String deleteHistory(@PathVariable("id") Integer id,HttpServletRequest request){
-    ContractHistory contractHistory=contractHistoryService.getHistoryById(id);
-    File file=new File(contractHistory.getFileAddress());
-    if (file.exists()){
-        System.out.println("存在");
-
-        file.delete();
-    }else {
-        System.out.println("不存在");
+    /**
+     * @Description: 获取某个员工的合同历史
+     * @Param: * @Param: id
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @GetMapping("/getAllHistoryByEmpId/{id}")
+    public List<ContractHistory> getAllHistoryByEmpId(@PathVariable("id") Integer id) {
+        return contractHistoryService.getAllHistoryByEmpId(id);
     }
-    int isSuccess=contractHistoryService.deleteHistoryById(id);
-    return ReturnUtils.isSuccess(isSuccess);
-}
+
+    /**
+     * @Description: 获取员工最后一次上传的合同记录
+     * @Param: * @Param: id
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @GetMapping("/getDownHistoryByEmpId/{id}")
+    public ContractHistory getDownHistoryByEmpId(@PathVariable("id") Integer id) {
+        List<ContractHistory> contractHistories = contractHistoryService.getAllHistoryByEmpId(id);
+        if (contractHistories.size() == 0) {
+            return null;
+        }
+        return contractHistories.get(0);
+    }
+
+    @PostMapping("/addHistory")
+    public String addHistory(@RequestBody ContractHistory contractHistory) {
+        int isSuccess = contractHistoryService.addHistory(contractHistory);
+        return ReturnUtils.isSuccess(isSuccess);
+    }
+
+    @DeleteMapping("/deleteHistory/{id}")
+    public String deleteHistory(@PathVariable("id") Integer id, HttpServletRequest request) {
+        ContractHistory contractHistory = contractHistoryService.getHistoryById(id);
+        File file = new File(contractHistory.getFileAddress());
+        if (file.exists()) {
+            System.out.println("存在");
+
+            file.delete();
+        } else {
+            System.out.println("不存在");
+        }
+        int isSuccess = contractHistoryService.deleteHistoryById(id);
+        return ReturnUtils.isSuccess(isSuccess);
+    }
 
 }

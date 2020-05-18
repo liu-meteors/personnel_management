@@ -14,5 +14,12 @@ public interface InterviewMapper {
     int updateInterviewById(Interview interview);
     List<Interview> getAllInterview();
     List<Interview> getAllInterviewNow();
+    /** 
+            * @Description: 获取当天面试信息 
+            * @Param:  * @Param: id
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     Interview getInterviewById(Integer id);
 }

@@ -21,6 +21,13 @@ import java.util.List;
 public class SalaryController {
     @Autowired
     SalaryService salaryService;
+    /** 
+            * @Description: 获取员工上各个月的工资信息 
+            * @Param:  * @Param: id
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getSalaryByEmpNow/{id}")
     public List<Salary> getSalaryByEmpNow(@PathVariable("id") Integer id){
         Salary salary=salaryService.getSalaryByEmpNow(id);
@@ -29,13 +36,25 @@ public class SalaryController {
         salaries.add(salary);
         return salaries;
     }
-
+    /** 
+            * @Description: 获取所有工资信息 
+            * @Param:  * @Param: 
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getAllSalary")
     public List<Salary> getAllSalary(){
         return salaryService.getAllSalary();
     }
 
-
+    /** 
+            * @Description: 获取所有公司上个月的工资信息 
+            * @Param:  * @Param: 
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getAllSalaryNow")
     public List<Salary> getAllSalaryNow(){
         return salaryService.getAllSalaryNow();

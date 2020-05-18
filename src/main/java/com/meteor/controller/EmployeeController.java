@@ -23,11 +23,24 @@ public class EmployeeController {
     PromotionMapper promotionMapper;
     @Autowired
     AdminService adminService;
+    /** 
+            * @Description: 获取所有员工信息 
+            * @Param:  * @Param: 
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @RequestMapping("/getEmp")
     public List<Employee> getAll(){
         return employeeService.getAll();
     }
-
+    /** 
+            * @Description: 添加员工 
+            * @Param:  * @Param: employee
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @PostMapping("/addEmployee")
     public String addEmployee(@RequestBody Employee employee){
         System.out.println(employee.toString());
@@ -53,7 +66,13 @@ public class EmployeeController {
             return "error";
         }
     }
-
+    /** 
+            * @Description: 修改员工 
+            * @Param:  * @Param: employee
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @PutMapping("/updateEmployee")
     public String updateEmployee(@RequestBody Employee employee){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -107,6 +126,13 @@ public class EmployeeController {
             return "error";
         }
     }
+    /** 
+            * @Description: 获取某个员工信息 
+            * @Param:  * @Param: id
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @GetMapping("/getEmpById/{id}")
     public Employee getEmpById(@PathVariable("id") Integer id){
             return employeeService.getEmployeeById(id);
@@ -122,7 +148,13 @@ public class EmployeeController {
         }
          return  emp;
     }
-
+    /** 
+            * @Description: 删除员工 
+            * @Param:  * @Param: id
+            * @return: 
+            * @Author: liujingyu
+            * @Date: 
+            */ 
     @DeleteMapping("/deleteEmp/{id}")
     public String deleteEmp(@PathVariable("id")Integer id){
         int isSuccess=employeeService.deleteEmployeeById(id);

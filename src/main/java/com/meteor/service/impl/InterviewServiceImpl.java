@@ -74,7 +74,13 @@ public class InterviewServiceImpl implements InterviewService {
         }
         return interviews;
     }
-
+    /**
+     * @Description: 获取当天面试信息
+     * @Param:  * @Param: id
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
     @Override
     public List<Interview> getAllInterviewNow() {
         List<Department> departments=departmentService.getAll();

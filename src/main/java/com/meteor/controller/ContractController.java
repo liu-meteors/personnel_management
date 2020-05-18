@@ -22,7 +22,7 @@ import java.util.List;
 public class ContractController {
     @Autowired
     ContractService contractService;
-    @GetMapping("getAllContract")
+    @GetMapping("/getAllContract")
     public List<Contract> getAllContract(){
         return contractService.getAllContract();
     }
