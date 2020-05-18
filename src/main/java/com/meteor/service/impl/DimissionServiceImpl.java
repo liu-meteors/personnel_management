@@ -129,4 +129,44 @@ public class DimissionServiceImpl implements DimissionService {
         }
         return dimissionMapper.addDimission(dimission);
     }
+
+    /**
+     * @param dep
+     * @Description: 获取部门离职信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Dimission> getAllDepDimission(Integer dep) {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        List<Dimission> dimissions=dimissionMapper.getAllDepDimission(dep);
+        List<Department> departments=departmentMapper.getAll();
+        List<Position> positions=positionMapper.getAllPosition();
+        for (int i=0;i<dimissions.size();i++){
+            for (int j=0;j<departments.size();j++){
+                if (dimissions.get(i).getDepartment()==departments.get(j).getId()){
+                    dimissions.get(i).setDepartmentName(departments.get(j).getName());
+                    break;
+                }
+            }
+            for (int k=0;k<positions.size();k++){
+                if (dimissions.get(i).getPosition()==positions.get(k).getId()){
+                    dimissions.get(i).setPositionName(positions.get(k).getName());
+                    break;
+                }
+            }
+            dimissions.get(i).setLeaveDateStr(simpleDateFormat.format(dimissions.get(i).getLeaveDate()));
+            if (dimissions.get(i).getIsOver()==0){
+                dimissions.get(i).setIsOverStr("未完成");
+                dimissions.get(i).setDelivery(false);
+            }else {
+                dimissions.get(i).setIsOverStr("已完成");
+                dimissions.get(i).setDelivery(true);
+            }
+        }
+        System.out.println(dimissions);
+        return dimissions;
+    }
 }

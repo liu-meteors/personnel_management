@@ -19,49 +19,49 @@ import java.util.List;
 public class DimissionController {
     @Autowired
     DimissionService dimissionService;
-    /** 
-            * @Description: 获取所有离职信息 
-            * @Param:  * @Param: 
-            * @return: 
+    /**
+            * @Description: 获取所有离职信息
+            * @Param:  * @Param:
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/getAllDimission")
     public List<Dimission> getAllDimission(){
         return dimissionService.getAllDimission();
     }
 
-    /** 
-            * @Description: 添加离职信息 
+    /**
+            * @Description: 添加离职信息
             * @Param:  * @Param: dimission
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @PostMapping("/addDimission")
     public String addDimission(@RequestBody Dimission dimission){
         int isSuccess=dimissionService.addDimission(dimission);
         return ReturnUtils.isSuccess(isSuccess);
     }
-    /** 
-            * @Description: 删除离职信息 
+    /**
+            * @Description: 删除离职信息
             * @Param:  * @Param: id
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @DeleteMapping("/deleteDimissionById/{id}")
     public String deleteDimissionById(@PathVariable("id") Integer id){
         int isSuccess=dimissionService.deleteDimission(id);
         return ReturnUtils.isSuccess(isSuccess);
     }
-    /** 
-            * @Description: 修改离职信息 
+    /**
+            * @Description: 修改离职信息
             * @Param:  * @Param: dimission
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @PutMapping("/updateDimission")
     public String updateDimission(@RequestBody Dimission dimission){
         int isSuccess=dimissionService.updateDimission(dimission);
@@ -72,5 +72,18 @@ public class DimissionController {
     @GetMapping("/getDimissionById/{id}")
     public Dimission getDimissionById(@PathVariable("id") Integer id){
         return dimissionService.getDimissionById(id);
+    }
+
+
+    /**
+     * @Description: 获取部门离职信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @GetMapping("/getAllDepDimission/{dep}")
+    public List<Dimission> getAllDepDimission(@PathVariable("dep") Integer dep){
+        return dimissionService.getAllDepDimission(dep);
     }
 }

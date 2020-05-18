@@ -21,13 +21,13 @@ import java.util.List;
 public class InterviewController {
     @Autowired
     InterviewService interviewService;
-    /** 
-            * @Description: 添加面试信息 
+    /**
+            * @Description: 添加面试信息
             * @Param:  * @Param: interview
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @PostMapping("/addInterview")
     public String addInterview(@RequestBody Interview interview){
         System.out.println(interview);
@@ -46,13 +46,13 @@ public class InterviewController {
     public List<Interview> getAllInterviewNow(){
         return interviewService.getAllInterviewNow();
     }
-    /** 
-            * @Description: 获取所有面试信息 
-            * @Param:  * @Param: 
-            * @return: 
+    /**
+            * @Description: 获取所有面试信息
+            * @Param:  * @Param:
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/getAllInterview")
     public List<Interview> getAllInterview(){
         return interviewService.getAllInterview();
@@ -69,15 +69,15 @@ public class InterviewController {
         int isSuccess=interviewService.deleteInterviewById(id);
         return ReturnUtils.isSuccess(isSuccess);
     }
-    /** 
-            * @Description: 发送入职通知书 
+    /**
+            * @Description: 发送入职通知书
             * @Param:  * @Param: fileName
  * @Param: id
  * @Param: request
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/sendOffer/{fileName}/{id}")
     public String sendOffer(@PathVariable("fileName") String fileName, @PathVariable("id") Integer id, HttpServletRequest request){
         String realPath = request.getServletContext().getRealPath("/upload") + "/mail/";
@@ -99,4 +99,30 @@ public class InterviewController {
         }
         return ReturnUtils.isSuccess(isSuccess);
     }
+
+
+    /**
+     * @Description: 获取该部门当天的面试情况
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @GetMapping("/getAllInterviewNowByDep/{dep}")
+  public   List<Interview> getAllInterviewNowByDep(@PathVariable("dep") Integer dep){
+        return interviewService.getAllInterviewNowByDep(dep);
+    }
+
+    /**
+     * @Description: 获取该部门当所有的面试情况
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @GetMapping("/getAllInterviewByDep/{dep}")
+    public List<Interview> getAllInterviewByDep(@PathVariable("dep") Integer dep){
+        return interviewService.getAllInterviewByDep(dep);
+    }
+
 }

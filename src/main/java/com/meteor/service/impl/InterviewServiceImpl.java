@@ -196,6 +196,44 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     /**
+     * @param dep
+     * @Description: 获取该部门当天的面试情况
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Interview> getAllInterviewNowByDep(Integer dep) {
+        List<Department> departments=departmentService.getAll();
+        List<Position> positions=positionMapper.getAllPosition();
+        List<Interview> interviews=interviewMapper.getAllInterviewNowByDep(dep);
+        for (int i=0;i<interviews.size();i++){
+            interviews.set(i,setInterViewInformation(interviews.get(i),departments,positions));
+        }
+        return interviews;
+    }
+
+    /**
+     * @param dep
+     * @Description: 获取该部门当所有的面试情况
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Interview> getAllInterviewByDep(Integer dep) {
+        List<Department> departments=departmentService.getAll();
+        List<Position> positions=positionMapper.getAllPosition();
+        List<Interview> interviews=interviewMapper.getAllInterviewByDep(dep);
+        for (int i=0;i<interviews.size();i++){
+            interviews.set(i,setInterViewInformation(interviews.get(i),departments,positions));
+        }
+        return interviews;
+    }
+
+    /**
      * 处理二进制邮件的基本信息，比如需要带附件的文本邮件、HTML文件、图片邮件、模板邮件等等
      *
      * @param mimeMessageHelper：二进制文件的包装类

@@ -25,4 +25,10 @@
     <select id="getInterviewById" resultType="com.meteor.pojo.Interview">
         select * from interview where id=#{id}
     </select>
+    <select id="getAllInterviewNowByDep" resultType="com.meteor.pojo.Interview">
+         select * from interview where to_days(viewDate) = to_days(now()) and department=#{dep};
+    </select>
+    <select id="getAllInterviewByDep" resultType="com.meteor.pojo.Interview">
+        select * from interview where department=#{dep}
+    </select>
 </mapper>

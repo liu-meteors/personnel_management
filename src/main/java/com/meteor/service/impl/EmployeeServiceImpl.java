@@ -242,4 +242,31 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return employees;
     }
+
+    /**
+     * @param dep
+     * @Description: 根据部门查询员工
+     * @Param: * @Param: pos
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Employee> getEmpByDep(Integer dep) {
+        List<Employee> employees=employeeMapper.getEmpByDep(dep);
+        List<Position> positions=positionMapper.getAllPosition();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        for (int i=0;i<employees.size();i++){
+            for (int k=0;k<positions.size();k++){
+                if (employees.get(i).getPosite()==positions.get(k).getId()){
+                    employees.get(i).setPositionName(positions.get(k).getName());
+                    break;
+                }
+            }
+            employees.get(i).setSignDateStr(simpleDateFormat.format( employees.get(i).getSignDate()));
+            employees.get(i).setOverDateStr(simpleDateFormat.format( employees.get(i).getOverDate()));
+            employees.get(i).setPassword(AESOperator.decrypt(employees.get(i).getPassword()));
+        }
+        return employees;
+    }
 }

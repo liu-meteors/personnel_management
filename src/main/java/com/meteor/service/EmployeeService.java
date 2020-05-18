@@ -71,4 +71,14 @@ public interface EmployeeService {
     String getLastEmpNumber();
     List<Employee> getAllEmpByDepPos(Integer dep,Integer pos);
     List<Employee> getEmpByPos(Integer pos);
+
+
+    /**
+     * @Description: 根据部门查询员工
+     * @Param: * @Param: pos
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    List<Employee> getEmpByDep(Integer dep);
 }

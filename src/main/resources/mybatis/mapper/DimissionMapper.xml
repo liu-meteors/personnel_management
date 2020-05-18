@@ -9,6 +9,9 @@
     <select id="getDimissionById" parameterType="integer" resultType="com.meteor.pojo.Dimission">
         select * from dimission where id=#{id}
     </select>
+    <select id="getAllDepDimission" resultType="com.meteor.pojo.Dimission">
+            select * from dimission where department=#{dep} order by id desc
+    </select>
     <insert id="addDimission" parameterType="com.meteor.pojo.Dimission">
         insert into dimission (id,username,empnumber,leavedate,department,position,handover,isover,phone) values (#{id},#{username},#{empNumber},#{leaveDate,jdbcType=DATE},#{department},#{position},#{handover},#{isOver},#{phone});
     </insert>

@@ -38,4 +38,7 @@
     <select id="getEmpByPos" resultType="com.meteor.pojo.Employee">
          select * from employee where posite=#{pos}
     </select>
+    <select id="getEmpByDep" resultType="com.meteor.pojo.Employee">
+        select * from employee where department=#{dep}
+    </select>
 </mapper>
