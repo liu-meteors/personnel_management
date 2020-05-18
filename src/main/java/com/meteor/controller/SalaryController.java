@@ -21,13 +21,13 @@ import java.util.List;
 public class SalaryController {
     @Autowired
     SalaryService salaryService;
-    /** 
-            * @Description: 获取员工上各个月的工资信息 
+    /**
+            * @Description: 获取员工上各个月的工资信息
             * @Param:  * @Param: id
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/getSalaryByEmpNow/{id}")
     public List<Salary> getSalaryByEmpNow(@PathVariable("id") Integer id){
         Salary salary=salaryService.getSalaryByEmpNow(id);
@@ -36,27 +36,37 @@ public class SalaryController {
         salaries.add(salary);
         return salaries;
     }
-    /** 
-            * @Description: 获取所有工资信息 
-            * @Param:  * @Param: 
-            * @return: 
+    /**
+            * @Description: 获取所有工资信息
+            * @Param:  * @Param:
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/getAllSalary")
     public List<Salary> getAllSalary(){
         return salaryService.getAllSalary();
     }
 
-    /** 
-            * @Description: 获取所有公司上个月的工资信息 
-            * @Param:  * @Param: 
-            * @return: 
+    /**
+            * @Description: 获取所有公司上个月的工资信息
+            * @Param:  * @Param:
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/getAllSalaryNow")
     public List<Salary> getAllSalaryNow(){
         return salaryService.getAllSalaryNow();
+    }
+
+    @GetMapping("/getAllSalaryByEmpId/{id}")
+    public List<Salary> getAllSalaryByEmpId(@PathVariable("id") Integer id){
+        return salaryService.getAllSalaryByEmp(id);
+    }
+
+    @GetMapping("/getSalaryByEmpIdYear/{empId}")
+    public List<Salary> getSalaryByEmpIdYear(@PathVariable("empId") Integer empId){
+        return salaryService.getSalaryByEmpIdYear(empId);
     }
 }

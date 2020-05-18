@@ -19,7 +19,7 @@
         select * from salary order by id desc
     </select>
     <select id="getAllSalaryByEmp" resultType="com.meteor.pojo.Salary">
-        select * from salary where empId=#{id}
+        select * from salary where empId=#{id} order by id desc
     </select>
     <select id="getSalaryByEmp"  resultType="com.meteor.pojo.Salary">
          select * from salary where empId=#{id} order by id desc limit 1
@@ -29,6 +29,9 @@
     </select>
     <select id="getAllSalaryNow" resultType="com.meteor.pojo.Salary">
         SELECT * FROM salary WHERE PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( payDate, '%Y%m' ) ) =1
+    </select>
+    <select id="getSalaryByEmpIdYear" resultType="com.meteor.pojo.Salary">
+        SELECT * FROM salary WHERE YEAR(  payDate ) = YEAR( NOW( ) ) and empId=#{id} order by id desc
     </select>
     <!--    SELECT * FROM salary WHERE date_format(payDate,'%Y-%m')=date_format(now(),'%Y-%m') and where empId=#{id}-->
 </mapper>
