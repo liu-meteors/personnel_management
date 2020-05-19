@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * @author ：liujingyu
@@ -120,6 +117,57 @@ public class LeaveServiceImpl implements LeaveService {
             leaves.set(i,setEmpName(leaves.get(i),employees));
         }
         return leaves;
+    }
+
+    /**
+     * @param dep
+     * @Description: 获取部门所有请假信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Leave> getAllDepLeave(Integer dep) {
+        List<Employee> employeeList=employeeMapper.getEmpByDep(dep);
+        List<Leave> leaves=leaveMapper.getAllLeave();
+        leaves=getDepLeave(leaves,employeeList);
+        for (int i=0;i<leaves.size();i++){
+            leaves.set(i,setEmpName(leaves.get(i),employeeList));
+        }
+        return leaves;
+    }
+
+    /**
+     * @param dep
+     * @Description: 获取部门当月所有请假信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Leave> getLeaveByDepMonth(Integer dep) {
+        List<Employee> employeeList=employeeMapper.getEmpByDep(dep);
+        List<Leave> leaves=leaveMapper.getAllLeaveByNow();
+        leaves=getDepLeave(leaves,employeeList);
+        for (int i=0;i<leaves.size();i++){
+            leaves.set(i,setEmpName(leaves.get(i),employeeList));
+        }
+        return leaves;
+    }
+
+    public List<Leave> getDepLeave(List<Leave> leaves,List<Employee> employees){
+        List<Leave> leaveList=new ArrayList<>();
+        for (Leave leave:leaves){
+            for (Employee employee:employees){
+                if (leave.getEmpId()==employee.getId()){
+                    leaveList.add(leave);
+                    break;
+                }
+            }
+        }
+        return leaveList;
     }
 
     public Leave setEmpName(Leave leave, List<Employee> employees){
