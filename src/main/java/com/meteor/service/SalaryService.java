@@ -13,9 +13,20 @@ public interface SalaryService {
      * @Date:
      */
     int addSalary(Integer empId);
+
     int deleteSalaryById(Integer id);
+
     int updateSalary(Salary salary);
+
+    /**
+     * @Description: 查询所有员工的工资信息
+     * @Param: * @Param:
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
     List<Salary> getAllSalary();
+
     /**
      * @Description: 查询某个员工的所有工资信息
      * @Param: * @Param: id 员工id
@@ -24,15 +35,25 @@ public interface SalaryService {
      * @Date:
      */
     List<Salary> getAllSalaryByEmp(Integer id);
+
     /**
      * @Description: 查询上个月的工资
-     * @Param:  * @Param: id
+     * @Param: * @Param: id
      * @return:
      * @Author: liujingyu
      * @Date:
      */
     Salary getSalaryByEmp(Integer id);
+
     Salary getSalaryByEmpNow(Integer id);
+
+    /**
+     * @Description: 查询所有员工上个月的工资信息
+     * @Param: * @Param:
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
     List<Salary> getAllSalaryNow();
 
     /**
@@ -43,4 +64,23 @@ public interface SalaryService {
      * @Date:
      */
     List<Salary> getSalaryByEmpIdYear(Integer empId);
+
+
+    /**
+     * @Description: 查询部门中所有的工资信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    List<Salary> getAllDepSalary(Integer dep);
+
+    /**
+     * @Description: 查询部门中所有员工上个月的工资信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    List<Salary> getSalaryByDepNow(Integer dep);
 }

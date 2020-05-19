@@ -68,4 +68,22 @@ public interface SalaryMapper {
      * @Date:
      */
     List<Salary> getSalaryByEmpIdYear(Integer empId);
+
+    /**
+     * @Description: 获取部门所有员工工资信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    List<Salary> getAllSalaryByDep(Integer dep);
+
+    /**
+     * @Description: 获取部门所有员工上个月工资
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    List<Salary> getSalaryByDepNow(Integer dep);
 }

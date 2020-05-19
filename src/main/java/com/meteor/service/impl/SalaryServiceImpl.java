@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -229,6 +230,51 @@ public class SalaryServiceImpl implements SalaryService {
         return salaries;
     }
 
+    /**
+     * @param dep
+     * @Description: 查询部门中所有的工资信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Salary> getAllDepSalary(Integer dep) {
+        List<Employee> employees=employeeService.getEmpByDep(dep);
+        List<Salary> salaries = salaryMapper.getAllSalary();
+        salaries=getDepList(salaries,employees);
+        salaries = setSalaryName(salaries);
+        return salaries;
+    }
+
+    /**
+     * @param dep
+     * @Description: 查询部门中所有员工上个月的工资信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Salary> getSalaryByDepNow(Integer dep) {
+        List<Employee> employees=employeeService.getEmpByDep(dep);
+        List<Salary> salaries = salaryMapper.getAllSalaryNow();
+        salaries=getDepList(salaries,employees);
+        salaries = setSalaryName(salaries);
+        return salaries;
+    }
+    public List<Salary> getDepList(List<Salary> salaries,List<Employee> employees){
+        List<Salary> salaryList=new ArrayList<>();
+        for (Salary salary:salaries){
+            for (Employee employee:employees){
+                if (employee.getId()==salary.getEmpId()){
+                    salaryList.add(salary);
+                    break;
+                }
+            }
+        }
+        return salaryList;
+    }
 
     public List<Salary> setSalaryName(List<Salary> salaries) {
         List<Department> departments = departmentService.getAll();
