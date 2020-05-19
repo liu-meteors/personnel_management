@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -193,8 +194,46 @@ class AwardServiceImpl implements AwardService {
         return awards;
     }
 
+    /**
+     * @param dep
+     * @Description: 获取部门的奖惩情况
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @Override
+    public List<Award> getAllDepAward(Integer dep) {
+        List<Award> awards=awardMapper.getAllAward();
+        List<Employee> employees=employeeMapper.getEmpByDep(dep);
+        awards=getAwardList(awards,employees);
+        for (int i=0;i<awards.size();i++){
+            for (int j=0;j<employees.size();j++){
+                Award award= setAwardInformation(awards.get(i),employees.get(j));
+                if (award!=null){
+                    awards.set(i,award);
+                }
+            }
+            awards.get(i).setRecordDateStr(simpleDateFormat.format(awards.get(i).getRecordDate()));
+        }
+        return awards;
+    }
+
+    public List<Award> getAwardList(List<Award> awards,List<Employee> employees){
+        List<Award> awardList=new ArrayList<>();
+        for (Award award:awards){
+            for (Employee employee:employees){
+                if (award.getEmpId()==employee.getId()){
+                    awardList.add(award);
+                }
+            }
+        }
+        return awardList;
+    }
+
     public Award setAwardInformation(Award award,Employee employee){
         if (award.getEmpId()==employee.getId()){
+            award.setEmpNumber(employee.getEmpNumber());
             award.setEmpName(employee.getUsername());
             if (award.getAwardType()==1){
                 award.setTypeName("奖励");

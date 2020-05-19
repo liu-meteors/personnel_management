@@ -26,4 +26,5 @@ public class Award {
     private String recordDateStr;
     private String empName;
     private String typeName;
+    private String empNumber;
 }
