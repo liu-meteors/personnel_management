@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -142,5 +143,34 @@ public class PromotionServiceImpl implements PromotionService {
             promotions.get(i).setChangeDateStr(simpleDateFormat.format(promotions.get(i).getChangeDate()));
         }
         return promotions;
+    }
+
+    @Override
+    public List<Promotion> getProByDep(Integer dep) {
+        List<Promotion> promotionList=new ArrayList<>();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        List<Promotion> promotions= promotionMapper.getAllPromotion();
+        List<Position> positions=positionMapper.getAllPosition();
+        List<Employee> employees=employeeMapper.getEmpByDep(dep);
+        for (int i=0;i<promotions.size();i++){
+            for (int j=0;j<positions.size();j++){
+                if (promotions.get(i).getOldPosition()==positions.get(j).getId()){
+                    promotions.get(i).setOldPositionName(positions.get(j).getName());
+                }
+                if (promotions.get(i).getNewPosition()==positions.get(j).getId()){
+                    promotions.get(i).setNewPositionName(positions.get(j).getName());
+                }
+            }
+            for (int k=0;k<employees.size();k++){
+                if (employees.get(k).getId()==promotions.get(i).getEmpId()){
+                    promotions.get(i).setEnpName(employees.get(k).getUsername());
+                    promotions.get(i).setEmpNumber(employees.get(k).getEmpNumber());
+                    promotionList.add(promotions.get(i));
+                    break;
+                }
+            }
+            promotions.get(i).setChangeDateStr(simpleDateFormat.format(promotions.get(i).getChangeDate()));
+        }
+        return promotionList;
     }
 }

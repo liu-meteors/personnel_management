@@ -19,61 +19,61 @@ import java.util.List;
 public class RecruitController {
     @Autowired
     RecruitService recruitService;
-    /** 
-            * @Description: 获取所有招聘信息 
-            * @Param:  * @Param: 
-            * @return: 
+    /**
+            * @Description: 获取所有招聘信息
+            * @Param:  * @Param:
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/getAllRecruit")
     public List<Recruit> getAllRecruit(){
         return recruitService.getAllRecruit();
     }
-    /** 
-            * @Description: 添加招聘信息 
+    /**
+            * @Description: 添加招聘信息
             * @Param:  * @Param: recruit
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @PostMapping("/addRecruit")
     public String addRecruit(@RequestBody Recruit recruit){
         int isSuccess=recruitService.addRecruit(recruit);
         return ReturnUtils.isSuccess(isSuccess);
 
     }
-    /** 
-            * @Description: 删除招聘信息 
+    /**
+            * @Description: 删除招聘信息
             * @Param:  * @Param: id
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
-    @GetMapping("/deleteRecruit/{id}")
+            * @Date:
+            */
+    @DeleteMapping("/deleteRecruit/{id}")
     public String deleteRecruit(@PathVariable("id") Integer id){
         int isSuccess=recruitService.deleteRecruitById(id);
         return ReturnUtils.isSuccess(isSuccess);
     }
-    /** 
-            * @Description: 修改招聘信息 
+    /**
+            * @Description: 修改招聘信息
             * @Param:  * @Param: recruit
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @PutMapping("/updateRecruit")
     public String updateRecruit(@RequestBody Recruit recruit){
         int isSuccess=recruitService.updateRecruit(recruit);
         return ReturnUtils.isSuccess(isSuccess);
     }
-    /** 
-            * @Description: 获取某一个招聘的信息 
+    /**
+            * @Description: 获取某一个招聘的信息
             * @Param:  * @Param: id
-            * @return: 
+            * @return:
             * @Author: liujingyu
-            * @Date: 
-            */ 
+            * @Date:
+            */
     @GetMapping("/getRecruitById/{id}")
     public Recruit getRecruitById(@PathVariable("id")Integer id){
         return recruitService.getRecruitById(id);

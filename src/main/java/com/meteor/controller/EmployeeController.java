@@ -57,6 +57,7 @@ public class EmployeeController {
         employee.setEmpNumber(newNumber);
         System.out.println(employee.toString());
         int i = employeeService.addEmployee(employee);
+        employee=employeeService.getEmployeeByNumber(employeeService.getLastEmpNumber());
         if (employee.getPosite() == 1) {
             adminService.addAdmin(adminService.setAdmin(employee));
         }

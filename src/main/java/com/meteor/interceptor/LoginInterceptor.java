@@ -39,6 +39,15 @@ public class LoginInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (!"http://192.168.1.88:8080".equals(request.getHeader("Origin"))){
+            System.out.println(request.getRequestURI());
+            if (request.getRequestURI().contains("download")){
+
+            }else {
+
+                return false;
+            }
+        }
         System.out.println("token::::"+request.getHeader("token"));
         HttpSession session=request.getSession();
 

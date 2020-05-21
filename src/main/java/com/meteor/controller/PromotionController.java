@@ -23,22 +23,37 @@ import java.util.List;
 public class PromotionController {
     @Autowired
     PromotionService promotionService;
+
     @GetMapping("/getAllPromotion")
-    public List<Promotion> getAllPromotion(){
+    public List<Promotion> getAllPromotion() {
         return promotionService.getAllPromotion();
     }
+
     @GetMapping("/getAllPromotionByEmpId/{empId}")
-    public List<Promotion> getAllPromotionByEmpId(@PathVariable("empId") Integer empId){
+    public List<Promotion> getAllPromotionByEmpId(@PathVariable("empId") Integer empId) {
         return promotionService.getPromotionByEmpId(empId);
     }
+
     @DeleteMapping("/deletePromotion/{id}")
-    public String deletePromotion(@PathVariable("id") Integer id){
-        int isSuccess=promotionService.deletePromotion(id);
+    public String deletePromotion(@PathVariable("id") Integer id) {
+        int isSuccess = promotionService.deletePromotion(id);
         return ReturnUtils.isSuccess(isSuccess);
     }
 
     @GetMapping("/getPromotionByEmpIdYear/{id}")
-    public List<Promotion> getPromotionByEmpIdYear(@PathVariable("id") Integer empId){
+    public List<Promotion> getPromotionByEmpIdYear(@PathVariable("id") Integer empId) {
         return promotionService.getPromotionByEmpIdYear(empId);
+    }
+
+    /**
+     * @Description: 获取部门晋升信息
+     * @Param: * @Param: dep
+     * @return:
+     * @Author: liujingyu
+     * @Date:
+     */
+    @GetMapping("/getProByDep/{dep}")
+    public List<Promotion> getProByDep(@PathVariable("dep") Integer dep) {
+        return promotionService.getProByDep(dep);
     }
 }
