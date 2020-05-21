@@ -7,7 +7,6 @@ import com.meteor.pojo.Salary;
 import com.meteor.service.AdminService;
 import com.meteor.service.EmployeeService;
 import com.meteor.service.SalaryService;
-import com.meteor.service.YearBenefitService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,8 +28,6 @@ public class LoginController {
     EmployeeService employeeService;
     @Autowired
     SalaryService salaryService;
-    @Autowired
-    YearBenefitService yearBenefitService;
 
 
     @PostMapping("/login")
@@ -40,7 +37,6 @@ public class LoginController {
         String password= (String) map.get("password");
         String identity= (String) map.get("identity");
         setSalary();
-        yearBenefitService.isAddYearBenefit();
         if (identity.equals("admin")){
             Admin admin=adminService.getAdminByName(username);
             if (admin!=null){
