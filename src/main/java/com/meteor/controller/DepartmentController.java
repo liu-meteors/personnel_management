@@ -1,6 +1,8 @@
 package com.meteor.controller;
 
+import com.meteor.pojo.Contract;
 import com.meteor.pojo.Department;
+import com.meteor.service.ContractService;
 import com.meteor.service.DepartmentService;
 import com.meteor.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ public class DepartmentController {
     private DepartmentService departmentService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private ContractService contractService;
     @GetMapping("getAll/{currPage}/{pageSize}")
     public  List<Department> getAll(@PathVariable("currPage")int currPage,
                                     @PathVariable("pageSize")int pageSize){
@@ -37,6 +41,12 @@ public class DepartmentController {
     public String addDepartment(@RequestBody Department department){
       int isSuccess=  departmentService.addDep(department);
       if (isSuccess>0){
+          for (int i=1;i<4;i++){
+              Contract contract=new Contract();
+              contract.setPosite(i);
+              contract.setDepartment(department.getId());
+              contractService.addContract(contract);
+          }
           return "success";
       }else {
           return "error";
