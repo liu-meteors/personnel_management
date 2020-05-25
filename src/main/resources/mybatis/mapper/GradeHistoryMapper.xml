@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meteor.mapper.GradeHistoryMapper">
+    <select id="getAllGradeHistory" resultType="com.meteor.pojo.GradeHistory">
+        select * from gradehistory order by id desc
+    </select>
+    <select id="getAllGradeHistoryNow" resultType="com.meteor.pojo.GradeHistory">
+         SELECT * FROM gradehistory WHERE PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( gradeDate, '%Y%m' ) ) =1
+    </select>
+    <insert id="addGradeHistory" parameterType="com.meteor.pojo.GradeHistory">
+        insert into gradehistory  (id,empId,gradeDate,grade) values (#{id},#{empId},#{gradeDate,jdbcType=DATE},#{grade});
+    </insert>
+</mapper>

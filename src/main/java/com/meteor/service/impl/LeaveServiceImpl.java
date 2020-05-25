@@ -178,10 +178,13 @@ public class LeaveServiceImpl implements LeaveService {
                 break;
             }
         }
-        if (leave.getStartDate().before(new Date())){
-            System.out.println(leave.getId()+"ddd"+leave.getStartDate());
-            leave.setHrApprove(3);
-            updateLeave(leave);
+        if (leave.getHrApprove()==0){
+
+            if (leave.getStartDate().before(new Date())){
+                System.out.println(leave.getId()+"ddd"+leave.getStartDate());
+                leave.setHrApprove(3);
+                updateLeave(leave);
+            }
         }
 //        if (leave.getDepApprove()==0||leave.getHrApprove()==0){
 //            if ()

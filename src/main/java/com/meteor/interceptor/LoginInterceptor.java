@@ -40,8 +40,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println(request.getHeader("Origin"));
-        boolean isTrue=!"http://localhost:8081".equals(request.getHeader("Origin"));
-        if (!"http://192.168.1.88:8081".equals(request.getHeader("Origin"))&&isTrue){
+        boolean isTrue=!"http://localhost:8080".equals(request.getHeader("Origin"));
+        if (!"http://192.168.1.88:8080".equals(request.getHeader("Origin"))&&isTrue){
             System.out.println(request.getRequestURI());
             if (request.getRequestURI().contains("download")){
 
