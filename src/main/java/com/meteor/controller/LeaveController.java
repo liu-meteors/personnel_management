@@ -138,4 +138,10 @@ public class LeaveController {
         return leaveService.getLeaveByDepMonth(dep);
     }
 
+    @DeleteMapping("/deleteLeaveById/{id}")
+    public String deleteLeaveById(@PathVariable("id") Integer id){
+        int isSuccess=leaveService.deleteLeaveById(id);
+        return ReturnUtils.isSuccess(isSuccess);
+    }
+
 }

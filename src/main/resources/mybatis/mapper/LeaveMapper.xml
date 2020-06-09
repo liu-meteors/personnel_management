@@ -3,6 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.meteor.mapper.LeaveMapper">
+    <delete id="deleteLeaveById" parameterType="integer">
+        delete from `leave` where id=#{id}
+    </delete>
     <select id="getAllLeave" resultType="com.meteor.pojo.Leave">
           SELECT * FROM `leave` order by id desc
     </select>

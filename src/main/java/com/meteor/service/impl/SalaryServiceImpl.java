@@ -34,7 +34,8 @@ public class SalaryServiceImpl implements SalaryService {
     DepartmentService departmentService;
     @Autowired
     PositionMapper positionMapper;
-
+    @Autowired
+    GradeHistoryService gradeHistoryService;
     /**
      * @Description: 添加工资
      * @Param: * @Param: empId
@@ -108,6 +109,14 @@ public class SalaryServiceImpl implements SalaryService {
                 gradeMoney = grade * 2000 / 100;
                 break;
         }
+        GradeHistory gradeHistory=new GradeHistory();
+        gradeHistory.setGrade((int)grade);
+        gradeHistory.setEmpId(empId);
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.MONTH,-1);
+        gradeHistory.setGradeDate(calendar.getTime());
+        gradeHistoryService.addGradeHistory(gradeHistory);
         salary.setGradeMoney(gradeMoney);
         salaryMoney += gradeMoney;
         if (awards.size() != 0) {
@@ -127,10 +136,10 @@ public class SalaryServiceImpl implements SalaryService {
         salary.setAllMoney(salaryMoney);
         salary.setBonus(bonus);
         salary.setForfeit(forfeit);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.MONTH, -1);
-        salary.setPayDate(calendar.getTime());
+        Calendar gradeCalendar = Calendar.getInstance();
+        gradeCalendar.setTime(new Date());
+        gradeCalendar.add(Calendar.MONTH, -1);
+        salary.setPayDate(gradeCalendar.getTime());
         System.out.println("工资信息" + salary);
         gradeService.deleteGrade(100);
 //        return salaryMapper.addSalary(salary);

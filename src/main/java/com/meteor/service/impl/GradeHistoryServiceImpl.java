@@ -8,6 +8,7 @@ import com.meteor.service.GradeHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,13 +102,15 @@ public class GradeHistoryServiceImpl implements GradeHistoryService {
 
 
     private List<GradeHistory> setEmpName(List<GradeHistory> gradeHistories){
-
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月");
         for (int i=0;i<gradeHistories.size();i++){
             Employee employee=employeeService.getEmployeeById(gradeHistories.get(i).getEmpId());
             gradeHistories.get(i).setEmpName(employee.getUsername());
             gradeHistories.get(i).setDepartmentName(employee.getDepartmentName());
             gradeHistories.get(i).setEmpNumber(employee.getEmpNumber());
             gradeHistories.get(i).setPositionName(employee.getPositionName());
+            gradeHistories.get(i).setGradeDateStr(simpleDateFormat.format(gradeHistories.get(i).getGradeDate()));
+
         }
 
 

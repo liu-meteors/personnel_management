@@ -18,4 +18,5 @@ public interface LeaveMapper {
     int addLeave(Leave leave);
     Leave getLeaveById(Integer id);
     List<Leave> getAllLeaveByNow();
+    int deleteLeaveById(Integer id);
 }

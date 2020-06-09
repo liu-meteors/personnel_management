@@ -157,6 +157,11 @@ public class LeaveServiceImpl implements LeaveService {
         return leaves;
     }
 
+    @Override
+    public int deleteLeaveById(Integer id) {
+        return leaveMapper.deleteLeaveById(id);
+    }
+
     public List<Leave> getDepLeave(List<Leave> leaves,List<Employee> employees){
         List<Leave> leaveList=new ArrayList<>();
         for (Leave leave:leaves){

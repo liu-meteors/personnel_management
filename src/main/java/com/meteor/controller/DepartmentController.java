@@ -41,10 +41,11 @@ public class DepartmentController {
     public String addDepartment(@RequestBody Department department){
       int isSuccess=  departmentService.addDep(department);
       if (isSuccess>0){
+          List<Department> departments=departmentService.getAll();
           for (int i=1;i<4;i++){
               Contract contract=new Contract();
               contract.setPosite(i);
-              contract.setDepartment(department.getId());
+              contract.setDepartment(departments.get(departments.size()-1).getId());
               contractService.addContract(contract);
           }
           return "success";

@@ -163,11 +163,6 @@ class AwardServiceImpl implements AwardService {
      */
     @Override
     public int addAward(Award award) {
-        try {
-            award.setRecordDate(DateUtils.getTrueDate(simpleDateFormat.parse(award.getRecordDateStr().split("T")[0])));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         System.out.println("添加奖惩"+award.toString());
         return awardMapper.addAward(award);
     }

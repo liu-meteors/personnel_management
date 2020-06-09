@@ -81,6 +81,7 @@ public class AwardController {
      */
     @PostMapping("/addAward")
     public String addAward(@RequestBody Award award) {
+        award.setRecordDate(new Date());
         int isSuccess = awardService.addAward(award);
         return ReturnUtils.isSuccess(isSuccess);
     }
