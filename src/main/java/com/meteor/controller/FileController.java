@@ -71,12 +71,14 @@ public class FileController {
     }
 
     /**
-     * http://localhost:8080/file/download?fileName=新建文本文档.txt
-     *
-     * @param fileName
-     * @param response
-     * @param request
-     * @return
+     * @Description: 下载简历
+     * @Param: * @Param: fileName
+     * @Param: id
+     * @Param: response
+     * @Param: request
+     * @return:
+     * @Author: liujingyu
+     * @Date:
      */
     @GetMapping("/download/{id}")
     public Object downloadFile(@RequestParam String fileName, @PathVariable("id") Integer id, final HttpServletResponse response, final HttpServletRequest request) {

@@ -263,11 +263,11 @@ public class InterviewServiceImpl implements InterviewService {
             //设置非必要的邮件元素，在使用helper进行封装时，这些数据都不能够为空
 
             if(ccPeoples != null)
-                //设置邮件的抄送人：MimeMessageHelper # Assert.notNull(cc, "Cc address array must not be null");
+                //设置邮件的抄送人
                 mimeMessageHelper.setCc(ccPeoples);
 
             if(bccPeoples != null)
-                //设置邮件的密送人：MimeMessageHelper # Assert.notNull(bcc, "Bcc address array must not be null");
+                //设置邮件的密送人
                 mimeMessageHelper.setBcc(bccPeoples);
 
             return true;
@@ -329,10 +329,7 @@ public class InterviewServiceImpl implements InterviewService {
                 resource = new FileSystemResource(new File(attachmentFilePath));
 
                 //判断该资源是否存在，当不存在时仅仅会打印一条警告日志，不会中断处理程序。
-                // 也就是说在附件出现异常的情况下，邮件是可以正常发送的，所以请确定你发送的邮件附件在本机存在
                 if(!resource.exists()){
-
-
                     //开启下一个资源的处理
                     continue;
                 }
